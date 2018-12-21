@@ -1,0 +1,28 @@
+[script]
+ [batch]
+  [sqlstatement]
+   [simplestatements]
+    [midbatchselectstatement]
+     [midbatchqueryexpression]
+      [queryspecification]
+       SELECT
+       [topclause]
+        TOP
+        [expression]
+         [itemexp]
+          50
+         *
+         [itemexp]
+          [expressioncolumname]
+           [columnlimitedname]
+            FROM()
+       [selectlist]
+        [selectlistcontent]
+         [expression]
+          [itemexp]
+           [expressioncolumname]
+            [objectoralias]
+             dbo(Unresolved alias)
+            .
+            [columnlimitedname]
+             MyTable()
