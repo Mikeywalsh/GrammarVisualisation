@@ -1,9 +1,6 @@
-﻿namespace GrammarTreeGenerator
+﻿public enum GrammarNodeType
 {
-    public enum GrammarNodeType
-    {
-        NONTERMINAL = 0,
-        TERMINAL,
-        ERROR
-    }
+    NONTERMINAL = 0,
+    TERMINAL,
+    ERROR
 }
