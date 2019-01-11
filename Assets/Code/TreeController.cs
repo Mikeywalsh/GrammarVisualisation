@@ -8,7 +8,7 @@ public class TreeController : MonoBehaviour
     public List<TreeNode> TreeNodes;
 
     public const int VISUALISATION_WIDTH = 40;
-    public const int VISUALISATION_HEIGHT = 25;
+    public const int VISUALISATION_HEIGHT = 25; 
 
     void Start()
     {
@@ -39,7 +39,12 @@ public class TreeController : MonoBehaviour
             throw new Exception("Ticket count should be 0 after processing, instead it is: " + allTickets.Count);
         }
 
-        // Assign a position to each node in the tree
+        AssignPositionToAllNodes();
+    }
+
+    private void AssignPositionToAllNodes()
+    {
+        // Obtain the maximum depth of the tree
         int maxDepth = TreeNodes.Max(x => x.Depth);
         int currentDepth = maxDepth;
 
