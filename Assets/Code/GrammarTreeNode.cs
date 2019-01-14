@@ -14,6 +14,10 @@ public class GrammarTreeNode
 
     public GrammarNodeType NodeType;
 
+    public float XPos;
+
+    public float YPos;
+
     /// <summary>
     /// The depth in the tree of this node
     /// </summary>
@@ -48,4 +52,19 @@ public class GrammarTreeNode
     /// The number of sibling tree nodes that this <see cref="GrammarTreeNode"/> has
     /// </summary>
     public int SiblingCount => Parent != null ? Parent.Children.Count - 1 : 0;
+
+    /// <summary>
+    /// Checks if this node is a sibling of a provided node and returns a flag signalling this
+    /// </summary>
+    /// <param name="node">The node to check the sibling relationship of</param>
+    /// <returns>A flag indicating if this node is a sibling of the provided node</returns>
+    public bool IsSiblingOf(GrammarTreeNode node)
+    {
+        if (Parent == null || node.Parent == null)
+        {
+            return false;
+        }
+
+        return Parent == node.Parent;
+    }
 }
