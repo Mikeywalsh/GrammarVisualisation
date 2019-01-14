@@ -47,11 +47,13 @@ public class TreeController : MonoBehaviour
                     }
 
                     currentXPos += H_SPACING;
+
+                    Debug.Log(currentNodes.Count + " " + currentXPos);
                 }
                 else
                 {
                     float childXPosSum = currentNodes[i].Children.Sum(c => c.XPos);
-                    currentXPos = childXPosSum / currentNode.Children.Count;
+                    currentXPos = childXPosSum / currentNode.Children.Count == 0? 1 : currentNode.Children.Count;
                 }
 
                 currentNode.XPos = currentXPos;

@@ -33,7 +33,7 @@ public class GrammarTreeNode
             Parent.AddChild(this);
         }
 
-        Depth = parent != null ? parent.Depth + 1 : 0;
+        Depth = parent?.Depth + 1 ?? 0;
         Text = text;
         NodeType = nodeType;
     }
