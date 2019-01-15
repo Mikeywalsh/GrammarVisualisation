@@ -102,6 +102,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4525873786576852}
   - component: {fileID: 1847376902982795016}
+  - component: {fileID: 8578103670193257827}
   m_Layer: 0
   m_Name: Grammar Node
   m_TagString: Untagged
@@ -138,6 +139,21 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_GeneratorAsset: {fileID: 0}
   m_Script: {fileID: 11500000, guid: 5266bea36484e7548b6db27040c4abd7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TypeText: {fileID: 114160758999596530}
+  ContentsText: {fileID: 114700706906201900}
+--- !u!114 &8578103670193257827
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1188504324066992}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_GeneratorAsset: {fileID: 0}
+  m_Script: {fileID: 11500000, guid: 45a62271dc384f348944548a24312f3e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1475856446088724

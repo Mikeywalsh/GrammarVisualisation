@@ -1,17 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UnityEngine;
+﻿using UnityEngine;
+using TMPro;
 
 public class GrammarTreeNodeObject : MonoBehaviour
 {
     GrammarTreeNode Node;
 
-    public string Text => Node.Text;
+    public string Contents => Node.Text;
 
     GrammarNodeType NodeType => Node.NodeType;
+
+    public TextMeshPro TypeText;
+
+    public TextMeshPro ContentsText;
 
     public void SetNode(GrammarTreeNode node)
     {
@@ -21,6 +21,7 @@ public class GrammarTreeNodeObject : MonoBehaviour
 
     private void UpdateDisplay()
     {
-
+        TypeText.text = NodeType.ToString();
+        ContentsText.text = Contents;
     }
 }

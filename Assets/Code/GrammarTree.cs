@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.IO;
+using UnityEngine;
 
 /// <summary>
 /// This class represents a grammar tree
@@ -48,6 +49,9 @@ public class GrammarTree
             CreationStack.Push(currentNode);
             Root = currentNode;
 
+            // Add the new node to the list of all available nodes
+            AllNodes.Add(currentNode);
+
             // Process each line individually
             while (!reader.EndOfStream)
             {
@@ -79,6 +83,8 @@ public class GrammarTree
 
                 // Add the new node to the list of all available nodes
                 AllNodes.Add(currentNode);
+
+                Debug.Log(currentDepth);
             }
         }
     }

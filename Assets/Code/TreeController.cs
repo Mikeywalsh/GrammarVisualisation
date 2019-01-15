@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using JetBrains.Annotations;
 using UnityEngine;
 
 public class TreeController : MonoBehaviour
@@ -10,11 +11,14 @@ public class TreeController : MonoBehaviour
     public const int H_SPACING = 10;
     public const int V_SPACING = 20;
 
+    public Dictionary<GrammarTreeNode, GameObject> nodeToObjectMap = new Dictionary<GrammarTreeNode, GameObject>();
+
     void Start()
     {
         Tree.ReadFromFile("Assets/sampleGrammar.txt");
 
         CreateNodeObjects();
+        CreateLineConnections();
     }
 
     private void CreateNodeObjects()
@@ -33,13 +37,23 @@ public class TreeController : MonoBehaviour
             var currentNodes = Tree.AllNodes.FindAll(x => x.Depth == currentDepth);
             GrammarTreeNode previousNode = null;
 
+            var nodesWithChildren = currentNodes.Where(n => n.Children.Count > 0);
+            var nodesWithoutChildren = currentNodes.Where(n => n.Children.Count == 0);
+
+            nodesWithChildren = nodesWithChildren.OrderBy(n => n.Parent);
+
+            var orderedNodes = nodesWithChildren.Concat(nodesWithoutChildren).ToList();
+
+
+            Debug.Log("DEPTH: " + currentDepth + "      " + orderedNodes.Count);
+
             // Create an object for each of the nodes at the current depth and assign them a position
-            for (int i = 0; i < currentNodes.Count; i++)
+            for (int i = 0; i < orderedNodes.Count; i++)
             {
-                var currentNode = currentNodes[i];
+                var currentNode = orderedNodes[i];
 
                 // Assign a position for this node
-                if (currentDepth == maxDepth)
+                if (currentNode.Children.Count == 0)
                 {
                     if (previousNode != null && !currentNode.IsSiblingOf(previousNode))
                     {
@@ -53,7 +67,7 @@ public class TreeController : MonoBehaviour
                 else
                 {
                     float childXPosSum = currentNodes[i].Children.Sum(c => c.XPos);
-                    currentXPos = childXPosSum / currentNode.Children.Count == 0? 1 : currentNode.Children.Count;
+                    currentXPos = childXPosSum / currentNode.Children.Count == 0 ? 1 : currentNode.Children.Count;
                 }
 
                 currentNode.XPos = currentXPos;
@@ -63,12 +77,26 @@ public class TreeController : MonoBehaviour
                 previousNode = currentNodes[i];
 
                 // Create an object for the node
-                GameObject newNodeObject = Instantiate(Resources.Load("Grammar Node"),new Vector3(currentNode.XPos, currentNode.YPos, 0), Quaternion.identity) as GameObject;
+                GameObject newNodeObject = Instantiate(Resources.Load("Grammar Node"), new Vector3(currentNode.XPos, currentNode.YPos, 0), Quaternion.identity) as GameObject;
                 newNodeObject.GetComponent<GrammarTreeNodeObject>().SetNode(currentNode);
+
+                // Create a mapping between the current node and the new GameObject created
+                nodeToObjectMap.Add(currentNode, newNodeObject);
             }
 
             currentDepth--;
             currentYPos += V_SPACING;
+        }
+    }
+
+    public void CreateLineConnections()
+    {
+        foreach (var node in Tree.AllNodes)
+        {
+            if (node.Parent != null)
+            {
+                nodeToObjectMap[node].GetComponent<LineConnection>().SetConnections(nodeToObjectMap[node.Parent]);
+            }
         }
     }
 }
