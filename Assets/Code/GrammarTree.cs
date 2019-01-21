@@ -83,8 +83,6 @@ public class GrammarTree
 
                 // Add the new node to the list of all available nodes
                 AllNodes.Add(currentNode);
-
-                Debug.Log(currentDepth);
             }
         }
     }

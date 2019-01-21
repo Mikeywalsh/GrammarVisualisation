@@ -6,97 +6,128 @@ using UnityEngine;
 
 public class TreeController : MonoBehaviour
 {
-    public GrammarTree Tree = new GrammarTree();
+	public GrammarTree Tree = new GrammarTree();
 
-    public const int H_SPACING = 10;
-    public const int V_SPACING = 20;
+	public const int H_SPACING = 10;
+	public const int V_SPACING = 20;
 
-    public Dictionary<GrammarTreeNode, GameObject> nodeToObjectMap = new Dictionary<GrammarTreeNode, GameObject>();
+	public Dictionary<GrammarTreeNode, GameObject> nodeToObjectMap = new Dictionary<GrammarTreeNode, GameObject>();
 
-    void Start()
-    {
-        Tree.ReadFromFile("Assets/sampleGrammar.txt");
+	private Dictionary<int, List<GrammarTreeNode>> depthMap = new Dictionary<int, List<GrammarTreeNode>>();
 
-        CreateNodeObjects();
-        CreateLineConnections();
-    }
+	void Start()
+	{
+		Tree.ReadFromFile("Assets/sampleGrammar.txt");
 
-    private void CreateNodeObjects()
-    {
-        // Obtain the maximum depth of the tree
-        int maxDepth = Tree.MaxDepth;
-        int currentDepth = maxDepth;
+		CreateNodeObjects();
+		AssignNodePositions();
+		CreateLineConnections();
+	}
 
-        // Initialise position tracking variables
-        float currentXPos = 0;
-        float currentYPos = 0;
+	private void CreateNodeObjects()
+	{
+		// Obtain the maximum depth of the tree
+		int maxDepth = Tree.MaxDepth;
+		int currentDepth = 0;
 
-        while (currentDepth >= 0)
-        {
-            // Get all nodes at the current depth
-            var currentNodes = Tree.AllNodes.FindAll(x => x.Depth == currentDepth);
-            GrammarTreeNode previousNode = null;
+		var visitQueue = new Queue<GrammarTreeNode>();
+		visitQueue.Enqueue(Tree.Root);
 
-            var nodesWithChildren = currentNodes.Where(n => n.Children.Count > 0);
-            var nodesWithoutChildren = currentNodes.Where(n => n.Children.Count == 0);
+		while (visitQueue.Any())
+		{
+			var currentNode = visitQueue.Dequeue();
 
-            nodesWithChildren = nodesWithChildren.OrderBy(n => n.Parent);
+			if (!nodeToObjectMap.ContainsKey(currentNode))
+			{
+				// Create an object for the node
+				GameObject newNodeObject = Instantiate(Resources.Load("Grammar Node"), new Vector3(currentNode.XPos, currentNode.YPos, 0), Quaternion.identity) as GameObject;
+				newNodeObject.GetComponent<GrammarTreeNodeObject>().SetNode(currentNode);
 
-            var orderedNodes = nodesWithChildren.Concat(nodesWithoutChildren).ToList();
+				// Create a mapping between the current node and the new GameObject created
+				nodeToObjectMap.Add(currentNode, newNodeObject);
 
+				if (!depthMap.ContainsKey(currentNode.Depth))
+				{
+					depthMap.Add(currentNode.Depth, new List<GrammarTreeNode>());
+				}
 
-            Debug.Log("DEPTH: " + currentDepth + "      " + orderedNodes.Count);
+				depthMap[currentNode.Depth].Add(currentNode);
 
-            // Create an object for each of the nodes at the current depth and assign them a position
-            for (int i = 0; i < orderedNodes.Count; i++)
-            {
-                var currentNode = orderedNodes[i];
+				foreach (var child in currentNode.Children)
+				{
+					if (!nodeToObjectMap.ContainsKey(child))
+					{
+						visitQueue.Enqueue(child);
+					}
+				}
+			}
 
-                // Assign a position for this node
-                if (currentNode.Children.Count == 0)
-                {
-                    if (previousNode != null && !currentNode.IsSiblingOf(previousNode))
-                    {
-                        currentXPos += H_SPACING;
-                    }
+		}
+	}
 
-                    currentXPos += H_SPACING;
+	private void AssignNodePositions()
+	{
+		// Obtain the maximum depth of the tree
+		int maxDepth = Tree.MaxDepth;
+		int currentDepth = maxDepth;
 
-                    Debug.Log(currentNodes.Count + " " + currentXPos);
-                }
-                else
-                {
-                    float childXPosSum = currentNodes[i].Children.Sum(c => c.XPos);
-                    currentXPos = childXPosSum / currentNode.Children.Count == 0 ? 1 : currentNode.Children.Count;
-                }
+		// Initialise position tracking variables
+		float currentXPos = 0;
+		float currentYPos = 0;
 
-                currentNode.XPos = currentXPos;
-                currentNode.YPos = currentYPos;
+		while (currentDepth >= 0)
+		{
+			// Get all nodes at the current depth
+			var currentNodes = depthMap[currentDepth];
+			GrammarTreeNode previousNode = null;		
 
-                // Assign the previous node
-                previousNode = currentNodes[i];
+			// Create an object for each of the nodes at the current depth and assign them a position
+			for (int i = 0; i < currentNodes.Count; i++)
+			{
+				var currentNode = currentNodes[i];
 
-                // Create an object for the node
-                GameObject newNodeObject = Instantiate(Resources.Load("Grammar Node"), new Vector3(currentNode.XPos, currentNode.YPos, 0), Quaternion.identity) as GameObject;
-                newNodeObject.GetComponent<GrammarTreeNodeObject>().SetNode(currentNode);
+				// Space siblings out
+				if (previousNode != null && !currentNode.IsSiblingOf(previousNode))
+				{
+					currentXPos += H_SPACING;
+				}
 
-                // Create a mapping between the current node and the new GameObject created
-                nodeToObjectMap.Add(currentNode, newNodeObject);
-            }
+				// Assign a position for this node
+				if (currentNode.Children.Count == 0)
+				{
+					currentXPos += H_SPACING;
+				}
+				else
+				{
+					float childXPosSum = currentNodes[i].Children.Sum(c => c.XPos);
+					var childXPosMean = childXPosSum / (currentNode.Children.Count == 0 ? 1 : currentNode.Children.Count);
 
-            currentDepth--;
-            currentYPos += V_SPACING;
-        }
-    }
+					currentXPos = Math.Max(childXPosMean, currentXPos + H_SPACING);
+				}
 
-    public void CreateLineConnections()
-    {
-        foreach (var node in Tree.AllNodes)
-        {
-            if (node.Parent != null)
-            {
-                nodeToObjectMap[node].GetComponent<LineConnection>().SetConnections(nodeToObjectMap[node.Parent]);
-            }
-        }
-    }
+				currentNode.XPos = currentXPos;
+				currentNode.YPos = currentYPos;
+
+				nodeToObjectMap[currentNode].transform.position = new Vector3(currentXPos, currentYPos, 0);
+
+				// Assign the previous node
+				previousNode = currentNodes[i];
+			}
+
+			currentDepth--;
+			currentYPos += V_SPACING;
+			currentXPos = 0;
+		}
+	}
+
+	public void CreateLineConnections()
+	{
+		foreach (var node in Tree.AllNodes)
+		{
+			if (node.Parent != null)
+			{
+				nodeToObjectMap[node].GetComponent<LineConnection>().SetConnections(nodeToObjectMap[node.Parent]);
+			}
+		}
+	}
 }
