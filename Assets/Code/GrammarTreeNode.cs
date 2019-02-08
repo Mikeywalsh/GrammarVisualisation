@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 /// <summary>
@@ -24,13 +25,11 @@ public class GrammarTreeNode
     /// </summary>
     public int Depth;
 
-    public float ChildWidth => Children.Any()? 0 : Children.Max(c => XPos) - Children.Min(c => c.XPos);
-
     public float SubTreeXStart => Children.Any() ? Children.Min(c => c.SubTreeXStart) : XPos;
 
     public float SubTreeXEnd => Children.Any() ? Children.Max(c => c.SubTreeXEnd) : XPos;
 
-    public float SubtreeWidth => SubTreeXEnd - SubTreeXStart;
+    public float SubtreeWidth => Math.Abs(SubTreeXEnd - SubTreeXStart) > 0? SubTreeXEnd - SubTreeXStart : 10;
 
     public GrammarTreeNode(GrammarNodeType nodeType, string text) : this(null, nodeType, text) { }
 

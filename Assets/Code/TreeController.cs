@@ -30,17 +30,19 @@ public class TreeController : MonoBehaviour
 
         while (currentDepth >= 0)
         {
-            var nodesAtDepth = Tree.AllNodes.Where(n => n.Depth == currentDepth);
+            var nodesAtDepth = Tree.AllNodes.Where(n => n.Depth == currentDepth).ToList();
 
             foreach (var node in nodesAtDepth)
             {
                 RepositionChildren(node);
+                Debug.Log("PLEASE" + currentDepth + "    " + node.Depth);
             }
 
             currentDepth--;
+            PositionChildrenInScene(Tree.Root);
+
         }
 
-        PositionChildrenInScene(Tree.Root);
         CreateLineConnections();
     }
 
@@ -101,36 +103,57 @@ public class TreeController : MonoBehaviour
 
     private void RepositionChildren(GrammarTreeNode node)
     {
-        float treeWidth = node.SubtreeWidth;
-        float leftXPos = node.XPos - (treeWidth / 2);
-        float currentXPos = 0;
+        // This has to be cached before repositioning as it would be changed during otherwise
+        float widthOfAllSubtrees = node.Children.Sum(n => n.SubtreeWidth);
 
-        //Debug.Log(treeWidth);
+        // This has to be cached and applied retroactively to avoid messing up calculations
+        var repositionsToApply = new List<float>();
 
         GrammarTreeNode lastNodePlaced = null;
         for (int i = 0; i < node.Children.Count; i++)
         {
             GrammarTreeNode currentChild = node.Children[i];
 
-            if (lastNodePlaced != null)
+            float repositionAmount = currentChild.XPos;
+
+            if (lastNodePlaced == null)
             {
-                currentChild.XPos = lastNodePlaced.XPos + H_SPACING + (lastNodePlaced.SubtreeWidth / 2) + currentChild.SubtreeWidth / 2;
+                if (node.Children.Count == 1)
+                {
+                    currentChild.XPos = node.XPos;
+                }
+                else
+                {
+                    currentChild.XPos = node.XPos - (widthOfAllSubtrees / 2);
+                }
             }
             else
             {
-                currentChild.XPos = node.XPos;
+                currentChild.XPos = lastNodePlaced.XPos + (lastNodePlaced.SubtreeWidth / 2) + (currentChild.SubtreeWidth / 2);
             }
 
-
-            if (i > 0)
-            {
-                for (int j = i; j >= 0; j--)
-                {
-                    node.Children[j].XPos -= ((H_SPACING / 2) + (lastNodePlaced.SubtreeWidth / 2) + (currentChild.SubtreeWidth / 2));
-                }
-            }
-
+            repositionsToApply.Add(repositionAmount -= currentChild.XPos);
             lastNodePlaced = currentChild;
+        }
+
+        // Check that the amount of child nodes and entries in the reposition map line up
+        if (repositionsToApply.Count != node.Children.Count)
+        {
+            throw new Exception("Reposition map is not the same length as the amount of children for this node");
+        }
+
+        for (int i = 0; i < node.Children.Count; i++)
+        {
+            MoveSubTree(node.Children[i], repositionsToApply[i]);
+        }
+    }
+
+    private void MoveSubTree(GrammarTreeNode node, float amount)
+    {
+        foreach (var child in node.Children)
+        {
+            child.XPos -= amount;
+            MoveSubTree(child, amount);
         }
     }
 
