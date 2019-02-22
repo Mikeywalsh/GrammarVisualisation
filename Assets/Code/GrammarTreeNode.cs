@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
 /// <summary>
 /// A node that is part of a grammar tree <para/>
@@ -22,6 +24,12 @@ public class GrammarTreeNode
     /// The depth in the tree of this node
     /// </summary>
     public int Depth;
+
+    public float SubTreeXStart => Children.Any() ? Children.Min(c => c.SubTreeXStart) : XPos;
+
+    public float SubTreeXEnd => Children.Any() ? Children.Max(c => c.SubTreeXEnd) : XPos;
+
+    public float SubtreeWidth => Math.Abs(SubTreeXEnd - SubTreeXStart) > 0? SubTreeXEnd - SubTreeXStart : 10;
 
     public GrammarTreeNode(GrammarNodeType nodeType, string text) : this(null, nodeType, text) { }
 

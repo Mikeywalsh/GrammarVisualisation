@@ -87,6 +87,11 @@ public class GrammarTree
         }
     }
 
+    public List<GrammarTreeNode> GetLeafNodes()
+    {
+        return AllNodes.Where(node => node.Children.Count == 0).ToList();
+    }
+
     private static GrammarNodeType GetTypeOfCurrentNode(string nodeText)
     {
         if (nodeText.First() == '[')
