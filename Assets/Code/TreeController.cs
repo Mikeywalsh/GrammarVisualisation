@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using JetBrains.Annotations;
 using UnityEngine;
 
 public class TreeController : MonoBehaviour
@@ -26,10 +24,10 @@ public class TreeController : MonoBehaviour
         CreateChildrenObjects(Tree.Root);
 
         // Position every node in the tree, starting from the leaf nodes
-        var leafNodes = Tree.GetLeafNodes();
-        PositionLeafNodes(leafNodes);
-        PositionTreeFromLeafNodes(leafNodes);
+        var positionedLeafNodes = PositionLeafNodes(Tree);
+        PositionParentNodes(positionedLeafNodes);
 
+        // Create a line connection between each node in the tree
         CreateLineConnections();
     }
 
@@ -66,8 +64,6 @@ public class TreeController : MonoBehaviour
 
             currentChild.YPos = node.YPos - V_SPACING;
             lastNodePlaced = currentChild;
-
-
         }
 
         foreach (var child in node.Children)
@@ -76,8 +72,15 @@ public class TreeController : MonoBehaviour
         }
     }
 
-    private void PositionLeafNodes(IEnumerable<GrammarTreeNode> leafNodes)
+    /// <summary>
+    /// Given a <see cref="GrammarTree"/>, position each of its leaf nodes
+    /// </summary>
+    /// <param name="tree">The tree to position the leaf nodes of</param>
+    /// <returns>A list of leaf nodes that have been positioned</returns>
+    private List<GrammarTreeNode> PositionLeafNodes(GrammarTree tree)
     {
+        var leafNodes = tree.GetLeafNodes();
+
         GrammarTreeNode previousNode = null;
 
         foreach (var leaf in leafNodes)
@@ -103,9 +106,15 @@ public class TreeController : MonoBehaviour
             // Set previousNode for the next cycles
             previousNode = leaf;
         }
+
+        return leafNodes;
     }
 
-    private void PositionTreeFromLeafNodes(List<GrammarTreeNode> nodes)
+    /// <summary>
+    /// Given a list of nodes that have already been positioned, position the next layer of the tree iteratively
+    /// </summary>
+    /// <param name="nodes">A list of nodes that have already been positioned</param>
+    private void PositionParentNodes(List<GrammarTreeNode> nodes)
     {
         while (true)
         {
@@ -137,61 +146,9 @@ public class TreeController : MonoBehaviour
         }
     }
 
-    private void AssignNodePositions()
-    {
-        // Obtain the maximum depth of the tree
-        int maxDepth = Tree.MaxDepth;
-        int currentDepth = maxDepth;
-
-        // Initialise position tracking variables
-        float currentXPos = 0;
-        float currentYPos = 0;
-
-        while (currentDepth >= 0)
-        {
-            // Get all nodes at the current depth
-            var currentNodes = depthMap[currentDepth];
-            GrammarTreeNode previousNode = null;
-
-            // Create an object for each of the nodes at the current depth and assign them a position
-            for (int i = 0; i < currentNodes.Count; i++)
-            {
-                var currentNode = currentNodes[i];
-
-                // Space siblings out
-                if (previousNode != null && !currentNode.IsSiblingOf(previousNode))
-                {
-                    currentXPos += H_SPACING;
-                }
-
-                // Assign a position for this node
-                if (currentNode.Children.Count == 0)
-                {
-                    currentXPos += H_SPACING;
-                }
-                else
-                {
-                    float childXPosSum = currentNodes[i].Children.Sum(c => c.XPos);
-                    var childXPosMean = childXPosSum / (currentNode.Children.Count == 0 ? 1 : currentNode.Children.Count);
-
-                    currentXPos = Math.Max(childXPosMean, currentXPos + H_SPACING);
-                }
-
-                currentNode.XPos = currentXPos;
-                currentNode.YPos = currentYPos;
-
-                nodeToObjectMap[currentNode].transform.position = new Vector3(currentXPos, currentYPos, 0);
-
-                // Assign the previous node
-                previousNode = currentNodes[i];
-            }
-
-            currentDepth--;
-            currentYPos += V_SPACING;
-            currentXPos = 0;
-        }
-    }
-
+    /// <summary>
+    /// For each node in the tree, create a line connection between it and its parent, if it has one
+    /// </summary>
     public void CreateLineConnections()
     {
         foreach (var node in Tree.AllNodes)
