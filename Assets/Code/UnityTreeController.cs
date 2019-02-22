@@ -2,15 +2,14 @@
 using System.Linq;
 using UnityEngine;
 
-public class TreeController : MonoBehaviour
+public class UnityTreeController : MonoBehaviour
 {
     public GrammarTree Tree = new GrammarTree();
 
-    public const float H_SPACING = 1;
-    public const float V_SPACING = -2;
+    public const float H_SPACING = 7;
+    public const float V_SPACING = -14;
 
     public Dictionary<GrammarTreeNode, GameObject> nodeToObjectMap = new Dictionary<GrammarTreeNode, GameObject>();
-
 
     private void Start()
     {

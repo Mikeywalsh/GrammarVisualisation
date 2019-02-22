@@ -20,7 +20,7 @@ public class CameraController : MonoBehaviour
 
             if (Physics.Raycast(ray, out hit))
             {
-                var hitNode = hit.transform.GetComponent<GrammarTreeNodeObject>();
+                var hitNode = hit.transform.GetComponent<IGrammarTreeNodeObject>();
                 if (hitNode != null)
                 {
                     Debug.Log("Hit node!");
