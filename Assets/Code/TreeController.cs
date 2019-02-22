@@ -9,7 +9,7 @@ public class TreeController : MonoBehaviour
     public GrammarTree Tree = new GrammarTree();
 
     public const float H_SPACING = 10;
-    public const float V_SPACING = 20;
+    public const float V_SPACING = -20;
 
     public Dictionary<GrammarTreeNode, GameObject> nodeToObjectMap = new Dictionary<GrammarTreeNode, GameObject>();
 
@@ -19,45 +19,25 @@ public class TreeController : MonoBehaviour
     {
         Tree.ReadFromFile("Assets/sampleGrammar.txt");
 
-        GameObject newNodeObject = Instantiate(Resources.Load("Grammar Node"), Vector3.zero, Quaternion.identity) as GameObject;
-        newNodeObject.GetComponent<GrammarTreeNodeObject>().SetNode(Tree.Root);
-        nodeToObjectMap.Add(Tree.Root, newNodeObject);
+        // Create the root node as a GameObject and add it to the node To Object map
+        CreateNodeObjectForNode(Tree.Root);
 
+        // Create every other node in the tree as GameObjects
         CreateChildrenObjects(Tree.Root);
 
-        var maxDepth = Tree.AllNodes.Max(n => n.Depth);
-        int currentDepth = maxDepth;
-
-        while (currentDepth >= 0)
-        {
-            var nodesAtDepth = Tree.AllNodes.Where(n => n.Depth == currentDepth).ToList();
-
-            foreach (var node in nodesAtDepth)
-            {
-                RepositionChildren(node);
-                Debug.Log("PLEASE" + currentDepth + "    " + node.Depth);
-            }
-
-            currentDepth--;
-            PositionChildrenInScene(Tree.Root);
-
-        }
+        // Position every node in the tree, starting from the leaf nodes
+        var leafNodes = Tree.GetLeafNodes();
+        PositionLeafNodes(leafNodes);
+        PositionTreeFromLeafNodes(leafNodes);
 
         CreateLineConnections();
     }
 
-    private void PositionChildrenInScene(GrammarTreeNode node)
+    private void CreateNodeObjectForNode(GrammarTreeNode node)
     {
-        if (!node.Children.Any())
-        {
-            return;
-        }
-
-        foreach (var child in node.Children)
-        {
-            nodeToObjectMap[child].transform.position = new Vector3(child.XPos, child.YPos);
-            PositionChildrenInScene(child);
-        }
+        GameObject newNodeObject = Instantiate(Resources.Load("Grammar Node"), Vector3.zero, Quaternion.identity) as GameObject;
+        newNodeObject.GetComponent<GrammarTreeNodeObject>().SetNode(node);
+        nodeToObjectMap.Add(node, newNodeObject);
     }
 
     private void CreateChildrenObjects(GrammarTreeNode node)
@@ -65,10 +45,7 @@ public class TreeController : MonoBehaviour
         // Create GameObjects for each child
         foreach (var child in node.Children)
         {
-            GameObject newNodeObject =
-                Instantiate(Resources.Load("Grammar Node"), Vector3.zero, Quaternion.identity) as GameObject;
-            newNodeObject.GetComponent<GrammarTreeNodeObject>().SetNode(child);
-            nodeToObjectMap.Add(child, newNodeObject);
+            CreateNodeObjectForNode(child);
         }
 
         // Generate the positions of each child
@@ -95,108 +72,70 @@ public class TreeController : MonoBehaviour
 
         foreach (var child in node.Children)
         {
-            //Debug.Log("CHILD: " + child.XPos);
-
             CreateChildrenObjects(child);
         }
     }
 
-    private void RepositionChildren(GrammarTreeNode node)
+    private void PositionLeafNodes(IEnumerable<GrammarTreeNode> leafNodes)
     {
-        // This has to be cached before repositioning as it would be changed during otherwise
-        float widthOfAllSubtrees = node.Children.Sum(n => n.SubtreeWidth);
+        GrammarTreeNode previousNode = null;
 
-        // This has to be cached and applied retroactively to avoid messing up calculations
-        var repositionsToApply = new List<float>();
-
-        GrammarTreeNode lastNodePlaced = null;
-        for (int i = 0; i < node.Children.Count; i++)
+        foreach (var leaf in leafNodes)
         {
-            GrammarTreeNode currentChild = node.Children[i];
+            // Assign vertical position of this leaf node
+            leaf.YPos = leaf.Depth * V_SPACING;
 
-            float repositionAmount = currentChild.XPos;
-
-            if (lastNodePlaced == null)
+            if (previousNode != null)
             {
-                if (node.Children.Count == 1)
+                leaf.XPos = previousNode.XPos + H_SPACING;
+
+                // Add additional spacing if this leaf node is not a sibling of the previous node
+                if (!leaf.IsSiblingOf(previousNode))
                 {
-                    currentChild.XPos = node.XPos;
-                }
-                else
-                {
-                    currentChild.XPos = node.XPos - (widthOfAllSubtrees / 2);
+                    leaf.XPos += H_SPACING;
                 }
             }
-            else
-            {
-                currentChild.XPos = lastNodePlaced.XPos + (lastNodePlaced.SubtreeWidth / 2) + (currentChild.SubtreeWidth / 2);
-            }
 
-            repositionsToApply.Add(repositionAmount -= currentChild.XPos);
-            lastNodePlaced = currentChild;
-        }
+            // Finally, assign the new leaf node position to its respective GrammarTreeNodeObject
+            var nodeObjectPosition = new Vector3(leaf.XPos, leaf.YPos, 0);
+            nodeToObjectMap[leaf].transform.position = nodeObjectPosition;
 
-        // Check that the amount of child nodes and entries in the reposition map line up
-        if (repositionsToApply.Count != node.Children.Count)
-        {
-            throw new Exception("Reposition map is not the same length as the amount of children for this node");
-        }
-
-        for (int i = 0; i < node.Children.Count; i++)
-        {
-            MoveSubTree(node.Children[i], repositionsToApply[i]);
+            // Set previousNode for the next cycles
+            previousNode = leaf;
         }
     }
 
-    private void MoveSubTree(GrammarTreeNode node, float amount)
+    private void PositionTreeFromLeafNodes(List<GrammarTreeNode> nodes)
     {
-        foreach (var child in node.Children)
+        while (true)
         {
-            child.XPos -= amount;
-            MoveSubTree(child, amount);
+            if (nodes == null || !nodes.Any())
+            {
+                return;
+            }
+
+            // Get a list of parent nodes, removing duplicates
+            var parentNodes = nodes.Select(node => node.Parent).Distinct().Where(parent => parent != null).ToList();
+            
+            foreach (var node in parentNodes)
+            {
+                // Assign the Y position of the parent node
+                node.YPos = node.Depth * V_SPACING;
+
+                // Calculate the X position of the parent node based on the average of the positions of its children
+                var childrenXPosSum = node.Children.Sum(child => child.XPos);
+                var averageXPosOfChildren = childrenXPosSum / node.Children.Count;
+                node.XPos = averageXPosOfChildren;
+
+                // Finally, assign the new parent node position to its respective GrammarTreeNodeObject
+                var nodeObjectPosition = new Vector3(node.XPos, node.YPos, 0);
+                nodeToObjectMap[node].transform.position = nodeObjectPosition;
+            }
+
+            // Position nodes in the next depth up
+            nodes = parentNodes;
         }
     }
-
-    //private void CreateNodeObjects()
-    //{
-    //	// Obtain the maximum depth of the tree
-    //	int maxDepth = Tree.MaxDepth;
-    //	int currentDepth = 0;
-
-    //	var visitQueue = new Queue<GrammarTreeNode>();
-    //	visitQueue.Enqueue(Tree.Root);
-
-    //	while (visitQueue.Any())
-    //	{
-    //		var currentNode = visitQueue.Dequeue();
-
-    //		if (!nodeToObjectMap.ContainsKey(currentNode))
-    //		{
-    //			// Create an object for the node
-    //			GameObject newNodeObject = Instantiate(Resources.Load("Grammar Node"), new Vector3(currentNode.XPos, currentNode.YPos, 0), Quaternion.identity) as GameObject;
-    //			newNodeObject.GetComponent<GrammarTreeNodeObject>().SetNode(currentNode);
-
-    //			// Create a mapping between the current node and the new GameObject created
-    //			nodeToObjectMap.Add(currentNode, newNodeObject);
-
-    //			if (!depthMap.ContainsKey(currentNode.Depth))
-    //			{
-    //				depthMap.Add(currentNode.Depth, new List<GrammarTreeNode>());
-    //			}
-
-    //			depthMap[currentNode.Depth].Add(currentNode);
-
-    //			foreach (var child in currentNode.Children)
-    //			{
-    //				if (!nodeToObjectMap.ContainsKey(child))
-    //				{
-    //					visitQueue.Enqueue(child);
-    //				}
-    //			}
-    //		}
-
-    //	}
-    //}
 
     private void AssignNodePositions()
     {
