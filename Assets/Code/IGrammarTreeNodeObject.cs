@@ -9,4 +9,6 @@
     void SetNode(GrammarTreeNode node);
 
     void UpdateDisplay();
+
+    void PositionNode(float xPos, float yPos);
 }

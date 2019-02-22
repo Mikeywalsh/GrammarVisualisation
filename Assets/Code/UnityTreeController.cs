@@ -42,30 +42,6 @@ public class UnityTreeController : MonoBehaviour
         foreach (var child in node.Children)
         {
             CreateNodeObjectForNode(child);
-        }
-
-        // Generate the positions of each child
-        GrammarTreeNode lastNodePlaced = null;
-        for (int i = 0; i < node.Children.Count; i++)
-        {
-            GrammarTreeNode currentChild = node.Children[i];
-
-            currentChild.XPos = lastNodePlaced?.XPos + H_SPACING ?? node.XPos;
-
-            if (i > 0)
-            {
-                for (int j = i; j >= 0; j--)
-                {
-                    node.Children[j].XPos -= H_SPACING / 2;
-                }
-            }
-
-            currentChild.YPos = node.YPos - V_SPACING;
-            lastNodePlaced = currentChild;
-        }
-
-        foreach (var child in node.Children)
-        {
             CreateChildrenObjects(child);
         }
     }

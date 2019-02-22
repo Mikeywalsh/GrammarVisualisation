@@ -32,6 +32,11 @@ namespace Assets.Code
             UpdateDisplay();
         }
 
+        public void PositionNode(float xPos, float yPos)
+        {
+            transform.position = new Vector3(xPos, yPos, 0);
+        }
+
         private void UpdateDisplay()
         {
             TypeText.text = NodeType().ToString();

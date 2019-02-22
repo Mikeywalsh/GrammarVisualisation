@@ -1,16 +1,14 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using UnityEngine;
 
-public class TreeController : MonoBehaviour
+public abstract class TreeController
 {
     public GrammarTree Tree = new GrammarTree();
 
     public const float H_SPACING = 1;
     public const float V_SPACING = -2;
 
-    public Dictionary<GrammarTreeNode, GameObject> nodeToObjectMap = new Dictionary<GrammarTreeNode, GameObject>();
-
+    public Dictionary<GrammarTreeNode, IGrammarTreeNodeObject> nodeToObjectMap = new Dictionary<GrammarTreeNode, IGrammarTreeNodeObject>();
 
     private void Start()
     {
@@ -30,12 +28,7 @@ public class TreeController : MonoBehaviour
         CreateLineConnections();
     }
 
-    private void CreateNodeObjectForNode(GrammarTreeNode node)
-    {
-        GameObject newNodeObject = Instantiate(Resources.Load("Grammar Node"), Vector3.zero, Quaternion.identity) as GameObject;
-        newNodeObject.GetComponent<IGrammarTreeNodeObject>().SetNode(node);
-        nodeToObjectMap.Add(node, newNodeObject);
-    }
+    protected abstract void CreateNodeObjectForNode(GrammarTreeNode node);
 
     private void CreateChildrenObjects(GrammarTreeNode node)
     {
@@ -43,30 +36,6 @@ public class TreeController : MonoBehaviour
         foreach (var child in node.Children)
         {
             CreateNodeObjectForNode(child);
-        }
-
-        // Generate the positions of each child
-        GrammarTreeNode lastNodePlaced = null;
-        for (int i = 0; i < node.Children.Count; i++)
-        {
-            GrammarTreeNode currentChild = node.Children[i];
-
-            currentChild.XPos = lastNodePlaced?.XPos + H_SPACING ?? node.XPos;
-
-            if (i > 0)
-            {
-                for (int j = i; j >= 0; j--)
-                {
-                    node.Children[j].XPos -= H_SPACING / 2;
-                }
-            }
-
-            currentChild.YPos = node.YPos - V_SPACING;
-            lastNodePlaced = currentChild;
-        }
-
-        foreach (var child in node.Children)
-        {
             CreateChildrenObjects(child);
         }
     }
@@ -99,8 +68,7 @@ public class TreeController : MonoBehaviour
             }
 
             // Finally, assign the new leaf node position to its respective IGrammarTreeNodeObject
-            var nodeObjectPosition = new Vector3(leaf.XPos, leaf.YPos, 0);
-            nodeToObjectMap[leaf].transform.position = nodeObjectPosition;
+            nodeToObjectMap[leaf].PositionNode(leaf.XPos, leaf.YPos);
 
             // Set previousNode for the next cycles
             previousNode = leaf;
@@ -124,7 +92,7 @@ public class TreeController : MonoBehaviour
 
             // Get a list of parent nodes, removing duplicates
             var parentNodes = nodes.Select(node => node.Parent).Distinct().Where(parent => parent != null).ToList();
-            
+
             foreach (var node in parentNodes)
             {
                 // Assign the Y position of the parent node
@@ -136,8 +104,7 @@ public class TreeController : MonoBehaviour
                 node.XPos = averageXPosOfChildren;
 
                 // Finally, assign the new parent node position to its respective IGrammarTreeNodeObject
-                var nodeObjectPosition = new Vector3(node.XPos, node.YPos, 0);
-                nodeToObjectMap[node].transform.position = nodeObjectPosition;
+                nodeToObjectMap[node].PositionNode(node.XPos, node.YPos);
             }
 
             // Position nodes in the next depth up
@@ -148,14 +115,5 @@ public class TreeController : MonoBehaviour
     /// <summary>
     /// For each node in the tree, create a line connection between it and its parent, if it has one
     /// </summary>
-    public void CreateLineConnections()
-    {
-        foreach (var node in Tree.AllNodes)
-        {
-            if (node.Parent != null)
-            {
-                nodeToObjectMap[node].GetComponent<LineConnection>().SetConnections(nodeToObjectMap[node.Parent]);
-            }
-        }
-    }
+    protected abstract void CreateLineConnections();
 }
