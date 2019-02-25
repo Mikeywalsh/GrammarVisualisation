@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.IO;
-using UnityEngine;
 
 /// <summary>
 /// This class represents a grammar tree
@@ -16,19 +15,14 @@ public class GrammarTree
     /// <summary>
     /// A list of all nodes contained within the grammar tree
     /// </summary>
-    public List<GrammarTreeNode> AllNodes { get; private set; }
+    public List<GrammarTreeNode> AllNodes { get; private set; } = new List<GrammarTreeNode>();
 
-    private Stack<GrammarTreeNode> CreationStack = new Stack<GrammarTreeNode>();
+    private readonly Stack<GrammarTreeNode> creationStack = new Stack<GrammarTreeNode>();
 
     /// <summary>
     /// The maximum depth of this grammar tree
     /// </summary>
     public int MaxDepth => AllNodes.Max(n => n.Depth);
-
-    public GrammarTree()
-    {
-        AllNodes = new List<GrammarTreeNode>();
-    }
 
     /// <summary>
     /// Populates this grammar tree using data at the specified file path
@@ -41,12 +35,12 @@ public class GrammarTree
             throw new FileNotFoundException();
         }
 
-        using (StreamReader reader = new StreamReader(path))
+        using (var reader = new StreamReader(path))
         {
             // Process the root node
-            string currentLine = reader.ReadLine();
-            GrammarTreeNode currentNode = new GrammarTreeNode(GetTypeOfCurrentNode(currentLine), currentLine);
-            CreationStack.Push(currentNode);
+            var currentLine = reader.ReadLine();
+            var currentNode = new GrammarTreeNode(GetTypeOfCurrentNode(currentLine), currentLine);
+            creationStack.Push(currentNode);
             Root = currentNode;
 
             // Add the new node to the list of all available nodes
@@ -58,27 +52,27 @@ public class GrammarTree
                 currentLine = reader.ReadLine();
 
                 // Determine the depth of the current node
-                int currentDepth = currentLine.TakeWhile(x => x == ' ').Count();
+                var currentDepth = currentLine.TakeWhile(x => x == ' ').Count();
 
-                string nodeTextWithoutWhitespace = currentLine.Substring(currentDepth);
+                var nodeTextWithoutWhitespace = currentLine.Substring(currentDepth);
 
-                if (currentDepth > CreationStack.Peek().Depth)
+                if (currentDepth > creationStack.Peek().Depth)
                 {
                     // Child of previous node
-                    currentNode = new GrammarTreeNode(CreationStack.Peek(), GetTypeOfCurrentNode(nodeTextWithoutWhitespace), nodeTextWithoutWhitespace);
-                    CreationStack.Push(currentNode);
+                    currentNode = new GrammarTreeNode(creationStack.Peek(), GetTypeOfCurrentNode(nodeTextWithoutWhitespace), nodeTextWithoutWhitespace);
+                    creationStack.Push(currentNode);
                 }
                 else
                 {
                     // Pop the creation stack until we arrive at one with the same depth
                     // This is a sibling node
-                    while (currentDepth <= CreationStack.Peek().Depth)
+                    while (currentDepth <= creationStack.Peek().Depth)
                     {
-                        CreationStack.Pop();
+                        creationStack.Pop();
                     }
 
-                    currentNode = new GrammarTreeNode(CreationStack.Peek(), GetTypeOfCurrentNode(nodeTextWithoutWhitespace), nodeTextWithoutWhitespace);
-                    CreationStack.Push(currentNode);
+                    currentNode = new GrammarTreeNode(creationStack.Peek(), GetTypeOfCurrentNode(nodeTextWithoutWhitespace), nodeTextWithoutWhitespace);
+                    creationStack.Push(currentNode);
                 }
 
                 // Add the new node to the list of all available nodes

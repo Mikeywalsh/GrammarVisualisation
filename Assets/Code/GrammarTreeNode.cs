@@ -25,12 +25,6 @@ public class GrammarTreeNode
     /// </summary>
     public int Depth;
 
-    public float SubTreeXStart => Children.Any() ? Children.Min(c => c.SubTreeXStart) : XPos;
-
-    public float SubTreeXEnd => Children.Any() ? Children.Max(c => c.SubTreeXEnd) : XPos;
-
-    public float SubtreeWidth => Math.Abs(SubTreeXEnd - SubTreeXStart) > 0? SubTreeXEnd - SubTreeXStart : 10;
-
     public GrammarTreeNode(GrammarNodeType nodeType, string text) : this(null, nodeType, text) { }
 
     public GrammarTreeNode(GrammarTreeNode parent, GrammarNodeType nodeType, string text)
