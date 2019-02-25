@@ -6,9 +6,6 @@ using System.Linq;
 /// </summary>
 public abstract class Tree<T>
 {
-	public float HorizontalSpacing = 7;
-	public float VerticalSpacing = -10;
-
     /// <summary>
     /// The root node of the tree
     /// </summary>
@@ -20,9 +17,29 @@ public abstract class Tree<T>
     public List<TreeNode<T>> AllNodes { get; protected set; } = new List<TreeNode<T>>();
 
     /// <summary>
-    /// The maximum depth of this tree
+    /// The horizontal spacing to use between nodes in the tree
     /// </summary>
-    public int MaxDepth => AllNodes.Max(n => n.Depth);
+    public float HorizontalSpacing;
+
+    /// <summary>
+    /// The vertical spacing to use between nodes in the tree
+    /// </summary>
+    public float VerticalSpacing;
+	/// <summary>
+	/// The maximum depth of this tree
+	/// </summary>
+	public int MaxDepth => AllNodes.Max(n => n.Depth);
+
+	/// <summary>
+	/// Creates a tree with the giving spacing between its nodes
+	/// </summary>
+	/// <param name="hSpacing">The horizontal spacing to use between nodes</param>
+	/// <param name="vSpacing">The vertical spacing to use between nodes</param>
+    protected Tree(float hSpacing, float vSpacing)
+    {
+	    HorizontalSpacing = hSpacing;
+	    VerticalSpacing = vSpacing;
+    }
 
 	/// <summary>
 	/// Gets a list of all leaf nodes within this tree

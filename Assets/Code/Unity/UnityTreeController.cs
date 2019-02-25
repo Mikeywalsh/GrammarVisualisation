@@ -7,13 +7,13 @@ public class UnityTreeController : MonoBehaviour
 	public GrammarTree CurrentTree;
 
     public const float H_SPACING = 7;
-    public const float V_SPACING = -14;
+    public const float V_SPACING = -10;
 
     public Dictionary<TreeNode<GrammarData>, GameObject> nodeToObjectMap = new Dictionary<TreeNode<GrammarData>, GameObject>();
 
     private void Start()
     {
-		CurrentTree = new GrammarTree("Assets/sampleGrammar.txt");
+		CurrentTree = new GrammarTree("Assets/sampleGrammar.txt", H_SPACING, V_SPACING);
 
         // Create the root node as a GameObject and add it to the node To Object map
         CreateNodeObjectForNode(CurrentTree.Root);

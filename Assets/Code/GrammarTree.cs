@@ -10,7 +10,9 @@ public class GrammarTree : Tree<GrammarData>
 	/// Populates this grammar tree using data at the specified file path
 	/// </summary>
 	/// <param name="filePath">The file location of the grammar tree data</param>
-	public GrammarTree(string filePath)
+	/// <param name="hSpacing">The horizontal spacing to use between nodes</param>
+	/// <param name="vSpacing">The vertical spacing to use between nodes</param>
+	public GrammarTree(string filePath, float hSpacing, float vSpacing) : base(hSpacing, vSpacing)
 	{
 		if (!File.Exists(filePath))
 		{
