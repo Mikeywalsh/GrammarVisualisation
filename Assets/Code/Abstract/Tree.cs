@@ -25,6 +25,7 @@ public abstract class Tree<T>
     /// The vertical spacing to use between nodes in the tree
     /// </summary>
     public float VerticalSpacing;
+
 	/// <summary>
 	/// The maximum depth of this tree
 	/// </summary>
