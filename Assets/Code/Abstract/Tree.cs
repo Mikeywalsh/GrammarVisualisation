@@ -15,20 +15,28 @@ public abstract class Tree<T>
     public TreeNode<T> Root { get; protected set; }
 
     /// <summary>
-    /// A list of all nodes contained within the grammar tree
+    /// A list of all nodes contained within the tree
     /// </summary>
     public List<TreeNode<T>> AllNodes { get; protected set; } = new List<TreeNode<T>>();
 
     /// <summary>
-    /// The maximum depth of this grammar tree
+    /// The maximum depth of this tree
     /// </summary>
     public int MaxDepth => AllNodes.Max(n => n.Depth);
 
+	/// <summary>
+	/// Gets a list of all leaf nodes within this tree
+	/// </summary>
+	/// <returns>A list of all nodes within this tree</returns>
     public List<TreeNode<T>> GetLeafNodes()
     {
         return AllNodes.Where(node => node.Children.Count == 0).ToList();
     }
 
+	/// <summary>
+	/// Assigns a position to each node in the tree <para/>
+	/// Should be used after the tree is generated
+	/// </summary>
     protected void PositionNodes()
     {
 	    var positionedLeafNodes = PositionLeafNodes();
