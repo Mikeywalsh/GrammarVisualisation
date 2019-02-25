@@ -23,4 +23,33 @@ public struct GrammarData
 		NodeType = nodeType;
 		NodeText = nodeText;
 	}
+
+	public override bool Equals(object obj)
+	{
+		return obj is GrammarData gData &&
+		       gData.NodeType == NodeType &&
+		       gData.NodeText == NodeText;
+	}
+
+	public override int GetHashCode()
+	{
+		var charSum = 0;
+
+		foreach (var character in NodeText)
+		{
+			charSum += character;
+		}
+
+		return (int)NodeType ^ charSum;
+	}
+
+	public static bool operator ==(GrammarData a, GrammarData b)
+	{
+		return a.Equals(b);
+	}
+
+	public static bool operator !=(GrammarData a, GrammarData b)
+	{
+		return !(a == b);
+	}
 }
