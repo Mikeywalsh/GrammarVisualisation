@@ -6,8 +6,8 @@ using System.Linq;
 /// </summary>
 public abstract class Tree<T>
 {
-	public const float H_SPACING = 7;
-	public const float V_SPACING = -10;
+	public float HorizontalSpacing = 7;
+	public float VerticalSpacing = -10;
 
     /// <summary>
     /// The root node of the tree
@@ -56,17 +56,17 @@ public abstract class Tree<T>
 	    foreach (var leaf in leafNodes)
 	    {
 		    // Initialise position of this leaf node
-		    var yPos = leaf.Depth * V_SPACING;
+		    var yPos = leaf.Depth * VerticalSpacing;
 		    var xPos = 0f;
 
 		    if (previousNode != null)
 		    {
-			    xPos = previousNode.Position.X + H_SPACING;
+			    xPos = previousNode.Position.X + HorizontalSpacing;
 
 			    // Add additional spacing if this leaf node is not a sibling of the previous node
 			    if (!leaf.IsSiblingOf(previousNode))
 			    {
-				    xPos += H_SPACING * 0.5f;
+				    xPos += HorizontalSpacing * 0.5f;
 			    }
 		    }
 
@@ -100,7 +100,7 @@ public abstract class Tree<T>
 		    foreach (var node in parentNodes)
 		    {
 			    // Initialise position of of the parent node
-			    var yPos = node.Depth * V_SPACING;
+			    var yPos = node.Depth * VerticalSpacing;
 			    var xPos = 0f;
 
 			    // Calculate the X position of the parent node based on the average of the positions of its children
