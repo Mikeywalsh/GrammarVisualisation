@@ -1,0 +1,112 @@
+﻿using System.Collections.Generic;
+using System.Linq;
+
+/// <summary>
+/// This class represents a grammar tree
+/// </summary>
+public abstract class Tree<T>
+{
+	public const float H_SPACING = 7;
+	public const float V_SPACING = -10;
+
+    /// <summary>
+    /// The root node of the tree
+    /// </summary>
+    public TreeNode<T> Root { get; protected set; }
+
+    /// <summary>
+    /// A list of all nodes contained within the grammar tree
+    /// </summary>
+    public List<TreeNode<T>> AllNodes { get; protected set; } = new List<TreeNode<T>>();
+
+    /// <summary>
+    /// The maximum depth of this grammar tree
+    /// </summary>
+    public int MaxDepth => AllNodes.Max(n => n.Depth);
+
+    public List<TreeNode<T>> GetLeafNodes()
+    {
+        return AllNodes.Where(node => node.Children.Count == 0).ToList();
+    }
+
+    protected void PositionNodes()
+    {
+	    var positionedLeafNodes = PositionLeafNodes();
+	    PositionParentNodes(positionedLeafNodes);
+    }
+
+    /// <summary>
+    /// Position each of the leaf nodes within this tree
+    /// </summary>
+    /// <returns>A list of leaf nodes that have been positioned</returns>
+    private List<TreeNode<T>> PositionLeafNodes()
+    {
+	    var leafNodes = GetLeafNodes();
+
+	    TreeNode<T> previousNode = null;
+
+	    foreach (var leaf in leafNodes)
+	    {
+		    // Initialise position of this leaf node
+		    var yPos = leaf.Depth * V_SPACING;
+		    var xPos = 0f;
+
+		    if (previousNode != null)
+		    {
+			    xPos = previousNode.Position.X + H_SPACING;
+
+			    // Add additional spacing if this leaf node is not a sibling of the previous node
+			    if (!leaf.IsSiblingOf(previousNode))
+			    {
+				    xPos += H_SPACING * 0.5f;
+			    }
+		    }
+
+		    // Finally, assign the new leaf node position to its respective IGrammarTreeNodeObject
+		    var leafPosition = new Vector2D(xPos, yPos);
+		    leaf.Position = leafPosition;
+
+		    // Set previousNode for the next cycles
+		    previousNode = leaf;
+	    }
+
+	    return leafNodes;
+    }
+
+    /// <summary>
+    /// Given a list of nodes that have already been positioned, position the next layer of the tree iteratively
+    /// </summary>
+    /// <param name="nodes">A list of nodes that have already been positioned</param>
+    private void PositionParentNodes(List<TreeNode<T>> nodes)
+    {
+	    while (true)
+	    {
+		    if (nodes == null || !nodes.Any())
+		    {
+			    return;
+		    }
+
+		    // Get a list of parent nodes, removing duplicates
+		    var parentNodes = nodes.Select(node => node.Parent).Distinct().Where(parent => parent != null).ToList();
+
+		    foreach (var node in parentNodes)
+		    {
+			    // Initialise position of of the parent node
+			    var yPos = node.Depth * V_SPACING;
+			    var xPos = 0f;
+
+			    // Calculate the X position of the parent node based on the average of the positions of its children
+			    var childrenXPosSum = node.Children.Sum(child => child.Position.X);
+			    var averageXPosOfChildren = childrenXPosSum / node.Children.Count;
+			    xPos = averageXPosOfChildren;
+
+			    // Finally, assign the new parent node position to its respective IGrammarTreeNodeObject
+			    var nodePosition = new Vector2D(xPos, yPos);
+			    node.Position = nodePosition;
+		    }
+
+		    // Position nodes in the next depth up
+		    nodes = parentNodes;
+	    }
+    }
+}
