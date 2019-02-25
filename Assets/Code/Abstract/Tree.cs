@@ -2,7 +2,7 @@
 using System.Linq;
 
 /// <summary>
-/// This class represents a grammar tree
+/// This class represents a tree, used to store data in a hierarchical manner
 /// </summary>
 public abstract class Tree<T>
 {
