@@ -1,7 +1,7 @@
-﻿using GrammarTree.Core;
+﻿using TreeVisualisation.Core;
 using NUnit.Framework;
 
-namespace GrammarTreeTest
+namespace TreeVisualisationTest
 {
 	[TestFixture]
 	internal class Vector2DTest
