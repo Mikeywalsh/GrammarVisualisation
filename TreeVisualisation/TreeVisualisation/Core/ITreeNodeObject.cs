@@ -1,4 +1,4 @@
-﻿namespace GrammarTree.Core
+﻿namespace TreeVisualisation.Core
 {
 	/// <summary>
 	/// This interface represents an object used for displaying information

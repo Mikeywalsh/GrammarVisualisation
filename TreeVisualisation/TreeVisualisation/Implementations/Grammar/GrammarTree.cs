@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using GrammarTree.Core;
+using TreeVisualisation.Core;
 
-namespace GrammarTree.Implementations.Grammar
+namespace TreeVisualisation.Implementations.Grammar
 {
-	public class GrammarTree : Tree<GrammarData>
+	public sealed class GrammarTree : Tree<GrammarData>
 	{
 		private readonly Stack<TreeNode<GrammarData>> creationStack = new Stack<TreeNode<GrammarData>>();
 

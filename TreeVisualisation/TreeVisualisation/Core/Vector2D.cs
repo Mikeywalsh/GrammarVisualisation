@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace GrammarTree.Core
+namespace TreeVisualisation.Core
 {
 	/// <summary>
 	/// A vector representing a 2D position in space

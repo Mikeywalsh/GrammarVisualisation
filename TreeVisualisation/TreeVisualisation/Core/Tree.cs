@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace GrammarTree.Core
+namespace TreeVisualisation.Core
 {
 	/// <summary>
 	/// This class represents a tree, used to store data in a hierarchical manner

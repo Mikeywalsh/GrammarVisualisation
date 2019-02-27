@@ -1,4 +1,4 @@
-﻿namespace GrammarTree.Implementations.Grammar
+﻿namespace TreeVisualisation.Implementations.Grammar
 {
 	/// <summary>
 	/// Data which can be used to describe a grammar node

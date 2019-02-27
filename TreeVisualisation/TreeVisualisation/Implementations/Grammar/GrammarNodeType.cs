@@ -1,4 +1,4 @@
-﻿namespace GrammarTree.Implementations.Grammar
+﻿namespace TreeVisualisation.Implementations.Grammar
 {
 	/// <summary>
 	/// Represents the different types of grammar nodes that can exist

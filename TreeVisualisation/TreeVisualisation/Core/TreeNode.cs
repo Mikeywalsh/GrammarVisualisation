@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace GrammarTree.Core
+namespace TreeVisualisation.Core
 {
 	/// <summary>
 	/// A node that is part of a tree <para/>
