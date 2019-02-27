@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace GrammarTree.Core
@@ -42,6 +43,42 @@ namespace GrammarTree.Core
 		{
 			HorizontalSpacing = hSpacing;
 			VerticalSpacing = vSpacing;
+		}
+
+		/// <summary>
+		/// Sets the root of this tree <para/>
+		/// Should only be called if the root has not already been set
+		/// </summary>
+		/// <param name="data">The value the root of the tree will have</param>
+		/// <returns>A reference to the created root node</returns>
+		public TreeNode<T> SetRoot(T data)
+		{
+			if (Root != null)
+			{
+				throw new Exception("Root is already set!");
+			}
+
+			Root = new TreeNode<T>(null, data);
+			AllNodes.Add(Root);
+			return Root;
+		}
+
+		/// <summary>
+		/// Adds a node with the given data to the tree as a child of a given parent node
+		/// </summary>
+		/// <param name="parent">The parent of this new node</param>
+		/// <param name="data">The value the new node will contain</param>
+		/// <returns>A reference to the newly created node</returns>
+		public TreeNode<T> Add(TreeNode<T> parent, T data)
+		{
+			if (!AllNodes.Contains(parent))
+			{
+				throw new Exception("Parent node not found in list of all nodes!");
+			}
+
+			var newNode = new TreeNode<T>(parent, data);
+			AllNodes.Add(newNode);
+			return newNode;
 		}
 
 		/// <summary>

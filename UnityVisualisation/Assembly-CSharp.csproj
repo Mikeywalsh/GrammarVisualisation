@@ -11,7 +11,7 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{A91E97C5-1336-3760-9F6B-BCE64FDA2E00}</ProjectGuid>
+    <ProjectGuid>{351FC195-CCB7-0028-8DA8-5E1180CB695A}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>Assembly-CSharp</AssemblyName>
@@ -62,17 +62,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Code\Abstract\Tree.cs" />
-    <Compile Include="Assets\Code\Enums\GrammarNodeType.cs" />
-    <Compile Include="Assets\Code\GrammarTree.cs" />
-    <Compile Include="Assets\Code\Interfaces\ITreeNodeObject.cs" />
-    <Compile Include="Assets\Code\Structs\GrammarData.cs" />
-    <Compile Include="Assets\Code\Structs\Vector2D.cs" />
-    <Compile Include="Assets\Code\TreeNode.cs" />
-    <Compile Include="Assets\Code\Unity\CameraController.cs" />
-    <Compile Include="Assets\Code\Unity\LineConnection.cs" />
-    <Compile Include="Assets\Code\Unity\UnityTreeController.cs" />
-    <Compile Include="Assets\Code\Unity\UnityTreeNodeObject.cs" />
+    <Compile Include="Assets\Code\CameraController.cs" />
+    <Compile Include="Assets\Code\LineConnection.cs" />
+    <Compile Include="Assets\Code\UnityTreeController.cs" />
+    <Compile Include="Assets\Code\UnityTreeNodeObject.cs" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Surface-Mobile.shader" />
     <None Include="Assets\TextMesh Pro\Resources\LineBreaking Leading Characters.txt" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMPro_Properties.cginc" />
@@ -91,32 +84,32 @@
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Mobile.shader" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_Sprite.shader" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Surface.shader" />
-    <Reference Include="Unity.TextMeshPro.Editor">
-      <HintPath>C:/Users/michael/Source/Repos/GrammarVisualisation/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.CollabProxy.Editor">
-      <HintPath>C:/Users/michael/Source/Repos/GrammarVisualisation/Library/ScriptAssemblies/Unity.CollabProxy.Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEditor.SpatialTracking">
-      <HintPath>C:/Users/michael/Source/Repos/GrammarVisualisation/Library/ScriptAssemblies/UnityEditor.SpatialTracking.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.SpatialTracking">
-      <HintPath>C:/Users/michael/Source/Repos/GrammarVisualisation/Library/ScriptAssemblies/UnityEngine.SpatialTracking.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.TextMeshPro">
-      <HintPath>C:/Users/michael/Source/Repos/GrammarVisualisation/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.Analytics.DataPrivacy">
-      <HintPath>C:/Users/michael/Source/Repos/GrammarVisualisation/Library/ScriptAssemblies/Unity.Analytics.DataPrivacy.dll</HintPath>
-    </Reference>
     <Reference Include="Unity.Timeline.Editor">
-      <HintPath>C:/Users/michael/Source/Repos/GrammarVisualisation/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
+      <HintPath>C:/Users/michael/Source/Repos/GrammarVisualisation/UnityVisualisation/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.TextMeshPro.Editor">
+      <HintPath>C:/Users/michael/Source/Repos/GrammarVisualisation/UnityVisualisation/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.PackageManagerUI.Editor">
-      <HintPath>C:/Users/michael/Source/Repos/GrammarVisualisation/Library/ScriptAssemblies/Unity.PackageManagerUI.Editor.dll</HintPath>
+      <HintPath>C:/Users/michael/Source/Repos/GrammarVisualisation/UnityVisualisation/Library/ScriptAssemblies/Unity.PackageManagerUI.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Timeline">
-      <HintPath>C:/Users/michael/Source/Repos/GrammarVisualisation/Library/ScriptAssemblies/Unity.Timeline.dll</HintPath>
+      <HintPath>C:/Users/michael/Source/Repos/GrammarVisualisation/UnityVisualisation/Library/ScriptAssemblies/Unity.Timeline.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.CollabProxy.Editor">
+      <HintPath>C:/Users/michael/Source/Repos/GrammarVisualisation/UnityVisualisation/Library/ScriptAssemblies/Unity.CollabProxy.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.SpatialTracking">
+      <HintPath>C:/Users/michael/Source/Repos/GrammarVisualisation/UnityVisualisation/Library/ScriptAssemblies/UnityEditor.SpatialTracking.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.SpatialTracking">
+      <HintPath>C:/Users/michael/Source/Repos/GrammarVisualisation/UnityVisualisation/Library/ScriptAssemblies/UnityEngine.SpatialTracking.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.TextMeshPro">
+      <HintPath>C:/Users/michael/Source/Repos/GrammarVisualisation/UnityVisualisation/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Analytics.DataPrivacy">
+      <HintPath>C:/Users/michael/Source/Repos/GrammarVisualisation/UnityVisualisation/Library/ScriptAssemblies/Unity.Analytics.DataPrivacy.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.AIModule">
       <HintPath>D:/Programming Stuff/Unity/Editor/2019.2.0a4/Editor/Data/Managed/UnityEngine/UnityEngine.AIModule.dll</HintPath>
@@ -299,13 +292,16 @@
       <HintPath>D:/Programming Stuff/Unity/Editor/2019.2.0a4/Editor/Data/UnityExtensions/Unity/TestRunner/net35/unity-custom/nunit.framework.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Analytics.Editor">
-      <HintPath>C:/Users/michael/Source/Repos/GrammarVisualisation/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.Editor.dll</HintPath>
+      <HintPath>C:/Users/michael/Source/Repos/GrammarVisualisation/UnityVisualisation/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Analytics.StandardEvents">
-      <HintPath>C:/Users/michael/Source/Repos/GrammarVisualisation/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.StandardEvents.dll</HintPath>
+      <HintPath>C:/Users/michael/Source/Repos/GrammarVisualisation/UnityVisualisation/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.StandardEvents.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Analytics.Tracker">
-      <HintPath>C:/Users/michael/Source/Repos/GrammarVisualisation/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.Tracker.dll</HintPath>
+      <HintPath>C:/Users/michael/Source/Repos/GrammarVisualisation/UnityVisualisation/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.Tracker.dll</HintPath>
+    </Reference>
+    <Reference Include="TreeVisualisation">
+      <HintPath>C:/Users/michael/Source/Repos/GrammarVisualisation/UnityVisualisation/Assets/Plugins/TreeVisualisation.dll</HintPath>
     </Reference>
     <Reference Include="netstandard">
       <HintPath>D:/Programming Stuff/Unity/Editor/2019.2.0a4/Editor/Data/NetStandard/ref/2.0.0/netstandard.dll</HintPath>

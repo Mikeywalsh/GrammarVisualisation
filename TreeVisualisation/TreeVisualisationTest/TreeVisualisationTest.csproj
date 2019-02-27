@@ -53,9 +53,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\GrammarTree\GrammarTree.csproj">
+    <ProjectReference Include="..\TreeVisualisation\TreeVisualisation.csproj">
       <Project>{954d6450-2d86-4f00-91a6-6b2986cf830f}</Project>
-      <Name>GrammarTree</Name>
+      <Name>TreeVisualisation</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

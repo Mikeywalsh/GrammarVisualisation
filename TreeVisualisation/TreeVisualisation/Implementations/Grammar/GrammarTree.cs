@@ -27,12 +27,10 @@ namespace GrammarTree.Implementations.Grammar
 				// Process the root node
 				var currentLine = reader.ReadLine();
 				var currentNodeData = new GrammarData(GetTypeOfCurrentNode(currentLine), currentLine);
-				var currentNode = new TreeNode<GrammarData>(currentNodeData);
-				creationStack.Push(currentNode);
-				Root = currentNode;
 
-				// Add the new node to the list of all available nodes
-				AllNodes.Add(currentNode);
+				// Set the root node of this tree
+				var currentNode = SetRoot(currentNodeData);
+				creationStack.Push(currentNode);
 
 				// Process each line individually
 				while (!reader.EndOfStream)
@@ -48,7 +46,7 @@ namespace GrammarTree.Implementations.Grammar
 					{
 						// Child of previous node
 						currentNodeData = new GrammarData(GetTypeOfCurrentNode(nodeTextWithoutWhitespace), nodeTextWithoutWhitespace);
-						currentNode = new TreeNode<GrammarData>(creationStack.Peek(), currentNodeData);
+						currentNode = Add(creationStack.Peek(), currentNodeData);
 						creationStack.Push(currentNode);
 					}
 					else
@@ -61,12 +59,9 @@ namespace GrammarTree.Implementations.Grammar
 						}
 
 						currentNodeData = new GrammarData(GetTypeOfCurrentNode(nodeTextWithoutWhitespace), nodeTextWithoutWhitespace);
-						currentNode = new TreeNode<GrammarData>(creationStack.Peek(), currentNodeData);
+						currentNode = Add(creationStack.Peek(), currentNodeData);
 						creationStack.Push(currentNode);
 					}
-
-					// Add the new node to the list of all available nodes
-					AllNodes.Add(currentNode);
 				}
 			}
 

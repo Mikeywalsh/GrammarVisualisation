@@ -1,10 +1,12 @@
 ﻿using System.Collections.Generic;
 using Assets.Code;
+using GrammarTree.Core;
+using GrammarTree.Implementations.Grammar;
 using UnityEngine;
 
 public class UnityTreeController : MonoBehaviour
 {
-	public GrammarTree CurrentTree;
+	public GrammarTree.Implementations.Grammar.GrammarTree CurrentTree;
 
     public const float H_SPACING = 7;
     public const float V_SPACING = -10;
@@ -13,7 +15,7 @@ public class UnityTreeController : MonoBehaviour
 
     private void Start()
     {
-		CurrentTree = new GrammarTree("Assets/sampleGrammar.txt", H_SPACING, V_SPACING);
+		CurrentTree = new GrammarTree.Implementations.Grammar.GrammarTree("Assets/sampleGrammar.txt", H_SPACING, V_SPACING);
 
         // Create the root node as a GameObject and add it to the node To Object map
         CreateNodeObjectForNode(CurrentTree.Root);

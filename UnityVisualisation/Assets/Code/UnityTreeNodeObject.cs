@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using GrammarTree.Core;
+using GrammarTree.Implementations.Grammar;
+using UnityEngine;
 using TMPro;
 
 namespace Assets.Code
