@@ -7,16 +7,17 @@ namespace TreeVisualisation.Implementations.Grammar
 {
 	public sealed class GrammarTree : Tree<GrammarData>
 	{
-		private readonly Stack<TreeNode<GrammarData>> creationStack = new Stack<TreeNode<GrammarData>>();
-
 		/// <summary>
-		/// Populates this grammar tree using data at the specified file path
+		/// Creates a grammar tree using data at the specified file path
 		/// </summary>
 		/// <param name="filePath">The file location of the grammar tree data</param>
 		/// <param name="hSpacing">The horizontal spacing to use between nodes</param>
 		/// <param name="vSpacing">The vertical spacing to use between nodes</param>
 		public GrammarTree(string filePath, float hSpacing, float vSpacing) : base(hSpacing, vSpacing)
 		{
+			// Initialise the creation stack used to assist parsing
+			var creationStack = new Stack<TreeNode<GrammarData>>();
+
 			if (!File.Exists(filePath))
 			{
 				throw new FileNotFoundException();
