@@ -7,7 +7,7 @@ namespace GrammarTree.Core
 	/// <summary>
 	/// This class represents a tree, used to store data in a hierarchical manner
 	/// </summary>
-	public abstract class Tree<T>
+	public class Tree<T>
 	{
 		/// <summary>
 		/// The root node of the tree
@@ -39,7 +39,7 @@ namespace GrammarTree.Core
 		/// </summary>
 		/// <param name="hSpacing">The horizontal spacing to use between nodes</param>
 		/// <param name="vSpacing">The vertical spacing to use between nodes</param>
-		protected Tree(float hSpacing, float vSpacing)
+		public Tree(float hSpacing, float vSpacing)
 		{
 			HorizontalSpacing = hSpacing;
 			VerticalSpacing = vSpacing;
