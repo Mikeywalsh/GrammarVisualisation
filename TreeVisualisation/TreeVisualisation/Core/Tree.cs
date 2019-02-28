@@ -156,14 +156,13 @@ namespace TreeVisualisation.Core
 
 				foreach (var node in parentNodes)
 				{
-					// Initialise position of of the parent node
+					// Initialise Y position of the parent node
 					var yPos = node.Depth * VerticalSpacing;
-					var xPos = 0f;
 
 					// Calculate the X position of the parent node based on the average of the positions of its children
 					var childrenXPosSum = node.Children.Sum(child => child.Position.X);
 					var averageXPosOfChildren = childrenXPosSum / node.Children.Count;
-					xPos = averageXPosOfChildren;
+					var xPos = averageXPosOfChildren;
 
 					// Finally, assign the new parent node position to its respective IGrammarTreeNodeObject
 					var nodePosition = new Vector2D(xPos, yPos);
