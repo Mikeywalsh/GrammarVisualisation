@@ -3,11 +3,13 @@
 # =============== #
 Temp/
 Library/
+Logs/
 # ===================================== #
 # Visual Studio / MonoDevelop generated #
 # ===================================== #
 ExportedObj/
 obj/
+bin/
 *.svd
 *.userprefs
 /*.csproj
@@ -27,4 +29,17 @@ obj/
 .Trashes
 ehthumbs.db
 Thumbs.db
-/.vs
+.vs/
+
+# ============== #
+# NuGet Packages #
+# ============== #
+*.nupkg
+TreeVisualisation/[Pp]ackages/*
+# except build/, which is used as an MSBuild target.
+!**/[Pp]ackages/build/
+# Uncomment if necessary however generally it will be regenerated when needed
+#!**/[Pp]ackages/repositories.config
+# NuGet v3's project.json files produces more ignorable files
+*.nuget.props
+*.nuget.targets
