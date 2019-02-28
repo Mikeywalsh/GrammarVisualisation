@@ -8,8 +8,8 @@
     <ProjectGuid>{D9585348-1C85-4555-9AA3-69FF412D36C4}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>GrammarTreeTest</RootNamespace>
-    <AssemblyName>GrammarTreeTest</AssemblyName>
+    <RootNamespace>TreeVisualisationTest</RootNamespace>
+    <AssemblyName>TreeVisualisationTest</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <NuGetPackageImportStamp>
@@ -47,6 +47,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TreeTest.cs" />
     <Compile Include="Vector2DTest.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -94,7 +94,7 @@ namespace TreeVisualisation.Core
 		/// Assigns a position to each node in the tree <para/>
 		/// Should be used after the tree is generated
 		/// </summary>
-		protected void PositionNodes()
+		public void PositionNodes()
 		{
 			var positionedLeafNodes = PositionLeafNodes();
 			PositionParentNodes(positionedLeafNodes);
