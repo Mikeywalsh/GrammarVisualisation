@@ -49,5 +49,10 @@ namespace TreeVisualisation.Core
 		{
 			return !(a == b);
 		}
+
+		public override string ToString()
+		{
+			return $"({X:0.00}, {Y:0.00})";
+		}
 	}
 }

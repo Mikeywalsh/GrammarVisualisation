@@ -17,7 +17,7 @@ namespace TreeVisualisation.Core
 		/// <summary>
 		/// A list of all nodes contained within the tree
 		/// </summary>
-		public List<TreeNode<T>> AllNodes { get; protected set; } = new List<TreeNode<T>>();
+		public List<TreeNode<T>> AllNodes { get; } = new List<TreeNode<T>>();
 
 		/// <summary>
 		/// The horizontal spacing to use between nodes in the tree

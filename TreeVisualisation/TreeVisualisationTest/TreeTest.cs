@@ -25,7 +25,7 @@ namespace TreeVisualisationTest
 		public void SetRootTest()
 		{
 			var root = numTree.SetRoot(5);
-			
+
 			Assert.AreEqual(root, numTree.Root);
 			Assert.AreEqual(5, numTree.Root.Data);
 			Assert.AreEqual(1, numTree.AllNodes.Count);
@@ -38,14 +38,6 @@ namespace TreeVisualisationTest
 			numTree.SetRoot(1);
 
 			Assert.Throws<Exception>(() => numTree.SetRoot(2));
-		}
-
-		[Test]
-		public void AddNodeInvalidParentShouldFailTest()
-		{
-			numTree.SetRoot(999);
-
-			Assert.Throws<Exception>(() => numTree.Add(new TreeNode<int>(4), 546));
 		}
 
 		[Test]
@@ -90,6 +82,14 @@ namespace TreeVisualisationTest
 		}
 
 		[Test]
+		public void AddNodeInvalidParentShouldFailTest()
+		{
+			numTree.SetRoot(999);
+
+			Assert.Throws<Exception>(() => numTree.Add(new TreeNode<int>(4), 546));
+		}
+
+		[Test]
 		public void GetLeafNodesWithRoot()
 		{
 			numTree.SetRoot(6);
@@ -116,6 +116,80 @@ namespace TreeVisualisationTest
 			numTree.Add(root, 3);
 
 			Assert.AreEqual(2, numTree.GetLeafNodes().Count);
+		}
+
+		[Test]
+		public void PositionNodesTestRootNode()
+		{
+			var root = numTree.SetRoot(5);
+			numTree.PositionNodes();
+
+			var expectedPosition = new Vector2D(0, 0);
+			Assert.AreEqual(expectedPosition, root.Position);
+		}
+
+		[Test]
+		public void PositionNodesTestSingleChild()
+		{
+			var root = numTree.SetRoot(5);
+			var child = numTree.Add(root, 3);
+			numTree.PositionNodes();
+
+			var expectedPosition = new Vector2D(0, 0);
+			Assert.AreEqual(expectedPosition, root.Position);
+
+			expectedPosition = new Vector2D(0, 5);
+			Assert.AreEqual(expectedPosition, child.Position);
+		}
+
+		[Test]
+		public void PositionNodesTestMultipleChildrenDepth1()
+		{
+			var root = numTree.SetRoot(5);
+			var child1 = numTree.Add(root, 3);
+			var child2 = numTree.Add(root, 6);
+			numTree.PositionNodes();
+
+			var expectedPosition = new Vector2D(5, 0);
+			Assert.AreEqual(expectedPosition, root.Position);
+
+			expectedPosition = new Vector2D(0, 5);
+			Assert.AreEqual(expectedPosition, child1.Position);
+
+			expectedPosition = new Vector2D(10, 5);
+			Assert.AreEqual(expectedPosition, child2.Position);
+		}
+
+		[Test]
+		public void PositionNodesTestMultipleChildrenDepth2()
+		{
+			var root = numTree.SetRoot(5);
+			var child1 = numTree.Add(root, 3);
+			var child1A = numTree.Add(child1, 1);
+			var child1B = numTree.Add(child1, 2);
+			var child1C = numTree.Add(child1, 4);
+			var child2 = numTree.Add(root, 6);
+			numTree.PositionNodes();
+
+			Assert.AreEqual(4, numTree.GetLeafNodes().Count);
+
+			var expectedPosition = new Vector2D(22.5f, 0);
+			Assert.AreEqual(expectedPosition, root.Position);
+
+			expectedPosition = new Vector2D(10, 5);
+			Assert.AreEqual(expectedPosition, child1.Position);
+
+			expectedPosition = new Vector2D(0, 10);
+			Assert.AreEqual(expectedPosition, child1A.Position);
+
+			expectedPosition = new Vector2D(10, 10);
+			Assert.AreEqual(expectedPosition, child1B.Position);
+
+			expectedPosition = new Vector2D(20, 10);
+			Assert.AreEqual(expectedPosition, child1C.Position);
+
+			expectedPosition = new Vector2D(35, 5);
+			Assert.AreEqual(expectedPosition, child2.Position);
 		}
 	}
 }

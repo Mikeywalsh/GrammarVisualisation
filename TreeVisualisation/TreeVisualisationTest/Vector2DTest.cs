@@ -13,17 +13,15 @@ namespace TreeVisualisationTest
 		[OneTimeSetUp]
 		public void CreateTestVectors()
 		{
-			vecA = new Vector2D(53.5f, 718.2f);
+			vecA = new Vector2D(53.5345f, 718.2f);
 			vecB = new Vector2D(12, 34.93f);
-			vecC = new Vector2D(53.5f, 718.2f);
+			vecC = new Vector2D(53.5345f, 718.2f);
 		}
 		[Test]
 		public void Vector2DCreatedProperlyTest()
 		{
-			var vector = new Vector2D(53.5f, 718.2f);
-
-			Assert.AreEqual(53.5f, vector.X);
-			Assert.AreEqual(718.2f, vector.Y);
+			Assert.AreEqual(53.5345f, vecA.X);
+			Assert.AreEqual(718.2f, vecA.Y);
 		}
 
 		[Test]
@@ -54,6 +52,14 @@ namespace TreeVisualisationTest
 		{
 			Assert.AreNotEqual(vecA.GetHashCode(), vecB.GetHashCode());
 			Assert.AreEqual(vecA.GetHashCode(), vecC.GetHashCode());
+		}
+
+		[Test]
+		public void ToStringTest()
+		{
+			Assert.AreEqual("(53.53, 718.20)", vecA.ToString());
+			Assert.AreEqual("(12.00, 34.93)", vecB.ToString());
+			Assert.AreEqual("(53.53, 718.20)", vecC.ToString());
 		}
 	}
 }

@@ -51,7 +51,7 @@ namespace TreeVisualisation.Core
 		/// Adds a node as a child of this node
 		/// </summary>
 		/// <param name="node">The node to add as a child of this node</param>
-		public void AddChild(TreeNode<T> node)
+		private void AddChild(TreeNode<T> node)
 		{
 			// Correctly set up the hierarchical relationship between parent and child
 			Children.Add(node);
