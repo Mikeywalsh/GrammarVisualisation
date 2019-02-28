@@ -35,7 +35,7 @@ namespace TreeVisualisation.Core
 		public int MaxDepth => AllNodes.Max(n => n.Depth);
 
 		/// <summary>
-		/// Creates a tree with the giving spacing between its nodes
+		/// Creates a tree with the given spacing between its nodes
 		/// </summary>
 		/// <param name="hSpacing">The horizontal spacing to use between nodes</param>
 		/// <param name="vSpacing">The vertical spacing to use between nodes</param>
