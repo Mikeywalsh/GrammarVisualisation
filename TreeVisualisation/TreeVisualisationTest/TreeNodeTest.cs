@@ -34,6 +34,10 @@ namespace TreeVisualisationTest
 
 			Assert.True(child1.IsSiblingOf(child2));
 			Assert.True(child2.IsSiblingOf(child1));
+
+			Assert.AreEqual(0, root.SiblingCount());
+			Assert.AreEqual(1, child1.SiblingCount());
+			Assert.AreEqual(1, child2.SiblingCount());
 		}
 
 		[Test]
@@ -44,6 +48,12 @@ namespace TreeVisualisationTest
 			var child2 = new TreeNode<byte>(root, data: 3);
 			var child1A = new TreeNode<byte>(child1, data: 4);
 			var child2A = new TreeNode<byte>(child2, data: 5);
+
+			Assert.AreEqual(0, root.SiblingCount());
+			Assert.AreEqual(1, child1.SiblingCount());
+			Assert.AreEqual(1, child2.SiblingCount());
+			Assert.AreEqual(0, child1A.SiblingCount());
+			Assert.AreEqual(0, child2A.SiblingCount());
 
 			Assert.True(child1.IsSiblingOf(child2));
 			Assert.True(child2.IsSiblingOf(child1));
