@@ -29,6 +29,18 @@ namespace TreeVisualisation.Core
 		/// </summary>
 		public float VerticalSpacing;
 
+        /// <summary>
+        /// Optional value which represents the width of a node <para/>
+        /// If this is not set, nodes are assumed to be points in space with no dimensions
+        /// </summary>
+        public float NodeWidth;
+
+        /// <summary>
+        /// Optional value which represents the height of a node <para/>
+        /// If this is not set, nodes are assumed to be points in space with no dimensions
+        /// </summary>
+        public float NodeHeight;
+
 		/// <summary>
 		/// The maximum depth of this tree
 		/// </summary>
@@ -44,6 +56,19 @@ namespace TreeVisualisation.Core
 			HorizontalSpacing = hSpacing;
 			VerticalSpacing = vSpacing;
 		}
+
+        /// <summary>
+        /// Creates a tree for nodes of a given height and width, with the given spacing between its nodes 
+        /// </summary>
+        /// <param name="hSpacing">The horizontal spacing to use between nodes</param>
+        /// <param name="vSpacing">The vertical spacing to use between nodes</param>
+        /// <param name="nodeWidth">The width of each node</param>
+        /// <param name="nodeHeight">The height of each node</param>
+        public Tree(float hSpacing, float vSpacing, float nodeWidth, float nodeHeight) : this(hSpacing, vSpacing)
+        {
+            NodeWidth = nodeWidth;
+            NodeHeight = nodeHeight;
+        }
 
 		/// <summary>
 		/// Sets the root of this tree <para/>
@@ -113,17 +138,17 @@ namespace TreeVisualisation.Core
 			foreach (var leaf in leafNodes)
 			{
 				// Initialise position of this leaf node
-				var yPos = leaf.Depth * VerticalSpacing;
+				var yPos = leaf.Depth * (VerticalSpacing + NodeHeight);
 				var xPos = 0f;
 
 				if (previousNode != null)
 				{
-					xPos = previousNode.Position.X + HorizontalSpacing;
+					xPos = previousNode.Position.X + NodeWidth + HorizontalSpacing;
 
 					// Add additional spacing if this leaf node is not a sibling of the previous node
 					if (!leaf.IsSiblingOf(previousNode))
 					{
-						xPos += HorizontalSpacing * 0.5f;
+						xPos += HorizontalSpacing;
 					}
 				}
 
@@ -156,11 +181,11 @@ namespace TreeVisualisation.Core
 
 				foreach (var node in parentNodes)
 				{
-					// Initialise Y position of the parent node
-					var yPos = node.Depth * VerticalSpacing;
+                    // Initialise Y position of the parent node
+                    var yPos = node.Depth * (VerticalSpacing + NodeHeight);
 
-					// Calculate the X position of the parent node based on the average of the positions of its children
-					var childrenXPosSum = node.Children.Sum(child => child.Position.X);
+                    // Calculate the X position of the parent node based on the average of the positions of its children
+                    var childrenXPosSum = node.Children.Sum(child => child.Position.X);
 					var averageXPosOfChildren = childrenXPosSum / node.Children.Count;
 					var xPos = averageXPosOfChildren;
 

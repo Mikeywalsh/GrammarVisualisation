@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Assets.Code;
 using TreeVisualisation.Core;
 using TreeVisualisation.Implementations.Grammar;
@@ -13,6 +14,7 @@ public class UnityTreeController : MonoBehaviour
 
     public Dictionary<TreeNode<GrammarData>, GameObject> nodeToObjectMap = new Dictionary<TreeNode<GrammarData>, GameObject>();
 
+
     private void Start()
     {
 		CurrentTree = new GrammarTree("Assets/sampleGrammar.txt", H_SPACING, V_SPACING);
@@ -25,6 +27,24 @@ public class UnityTreeController : MonoBehaviour
 
         // Create a line connection between each node in the tree
         CreateLineConnections();
+
+        var treeBounds = CalculateTreeBounds();
+        Camera.main.GetComponent<CameraController>().PositionCamera(treeBounds);
+    }
+
+    private Rect CalculateTreeBounds()
+    {
+        var minX = CurrentTree.AllNodes.Min(n => n.Position.X);
+        var maxX = CurrentTree.AllNodes.Max(n => n.Position.X);
+        var minY = CurrentTree.AllNodes.Min(n => n.Position.Y);
+        var maxY = CurrentTree.AllNodes.Max(n => n.Position.Y);
+
+        //minX -= 50;
+        //maxX += 50;
+        //minY -= 50;
+        //maxY += 50;
+
+        return new Rect(minX, minY, maxX - minX, maxY - minY);
     }
 
     private void CreateNodeObjectForNode(TreeNode<GrammarData> node)
