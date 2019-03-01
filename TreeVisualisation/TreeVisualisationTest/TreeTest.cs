@@ -11,7 +11,7 @@ namespace TreeVisualisationTest
 		[SetUp]
 		public void CreateTree()
 		{
-			numTree = new Tree<int>(10, 5);
+			numTree = new Tree<int>(new Vector2D(10, 5));
 		}
 
 		[Test]
@@ -195,7 +195,7 @@ namespace TreeVisualisationTest
         [Test]
         public void PositionNodesWithWidthAndHeight()
         {
-            var treeWithDimensionalNodes = new Tree<string>(2, 3, 10, 5);
+            var treeWithDimensionalNodes = new Tree<string>(new Vector2D(2, 3), new Vector2D(10, 5));
 
             var root = treeWithDimensionalNodes.SetRoot("foo");
             var child1 = treeWithDimensionalNodes.Add(root, "bar");

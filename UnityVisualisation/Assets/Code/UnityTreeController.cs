@@ -11,13 +11,16 @@ public class UnityTreeController : MonoBehaviour
 
     public const float H_SPACING = 7;
     public const float V_SPACING = -10;
+    
+    public const float NODE_WIDTH = 7;
+    public const float NODE_HEIGHT = 3;
 
     public Dictionary<TreeNode<GrammarData>, GameObject> nodeToObjectMap = new Dictionary<TreeNode<GrammarData>, GameObject>();
 
 
     private void Start()
     {
-		CurrentTree = new GrammarTree("Assets/sampleGrammar.txt", H_SPACING, V_SPACING);
+		CurrentTree = new GrammarTree("Assets/sampleGrammar.txt", H_SPACING, V_SPACING, NODE_WIDTH, NODE_HEIGHT);
 
         // Create the root node as a GameObject and add it to the node To Object map
         CreateNodeObjectForNode(CurrentTree.Root);
@@ -38,11 +41,6 @@ public class UnityTreeController : MonoBehaviour
         var maxX = CurrentTree.AllNodes.Max(n => n.Position.X);
         var minY = CurrentTree.AllNodes.Min(n => n.Position.Y);
         var maxY = CurrentTree.AllNodes.Max(n => n.Position.Y);
-
-        //minX -= 50;
-        //maxX += 50;
-        //minY -= 50;
-        //maxY += 50;
 
         return new Rect(minX, minY, maxX - minX, maxY - minY);
     }
