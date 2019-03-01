@@ -9,8 +9,8 @@ public class UnityTreeController : MonoBehaviour
 {
 	public GrammarTree CurrentTree;
 
-    public const float H_SPACING = 7;
-    public const float V_SPACING = -10;
+    public const float H_SPACING = 1;
+    public const float V_SPACING = 6;
     
     public const float NODE_WIDTH = 7;
     public const float NODE_HEIGHT = 3;
@@ -20,7 +20,7 @@ public class UnityTreeController : MonoBehaviour
 
     private void Start()
     {
-		CurrentTree = new GrammarTree("Assets/sampleGrammar.txt", H_SPACING, V_SPACING, NODE_WIDTH, NODE_HEIGHT);
+		CurrentTree = new GrammarTree("Assets/sampleGrammar.txt", new Vector2D(H_SPACING, V_SPACING), new Vector2D(NODE_WIDTH, NODE_HEIGHT));
 
         // Create the root node as a GameObject and add it to the node To Object map
         CreateNodeObjectForNode(CurrentTree.Root);

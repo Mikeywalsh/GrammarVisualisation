@@ -138,7 +138,7 @@ namespace TreeVisualisationTest
 			var expectedPosition = new Vector2D(0, 0);
 			Assert.AreEqual(expectedPosition, root.Position);
 
-			expectedPosition = new Vector2D(0, 5);
+			expectedPosition = new Vector2D(0, -5);
 			Assert.AreEqual(expectedPosition, child.Position);
 		}
 
@@ -153,10 +153,10 @@ namespace TreeVisualisationTest
 			var expectedPosition = new Vector2D(5, 0);
 			Assert.AreEqual(expectedPosition, root.Position);
 
-			expectedPosition = new Vector2D(0, 5);
+			expectedPosition = new Vector2D(0, -5);
 			Assert.AreEqual(expectedPosition, child1.Position);
 
-			expectedPosition = new Vector2D(10, 5);
+			expectedPosition = new Vector2D(10, -5);
 			Assert.AreEqual(expectedPosition, child2.Position);
 		}
 
@@ -173,22 +173,22 @@ namespace TreeVisualisationTest
 
 			Assert.AreEqual(4, numTree.GetLeafNodes().Count);
 
-			var expectedPosition = new Vector2D(25f, 0);
+			var expectedPosition = new Vector2D(22.5f, 0);
 			Assert.AreEqual(expectedPosition, root.Position);
 
-			expectedPosition = new Vector2D(10, 5);
+			expectedPosition = new Vector2D(10, -5);
 			Assert.AreEqual(expectedPosition, child1.Position);
 
-			expectedPosition = new Vector2D(0, 10);
+			expectedPosition = new Vector2D(0, -10);
 			Assert.AreEqual(expectedPosition, child1A.Position);
 
-			expectedPosition = new Vector2D(10, 10);
+			expectedPosition = new Vector2D(10, -10);
 			Assert.AreEqual(expectedPosition, child1B.Position);
 
-			expectedPosition = new Vector2D(20, 10);
+			expectedPosition = new Vector2D(20, -10);
 			Assert.AreEqual(expectedPosition, child1C.Position);
 
-			expectedPosition = new Vector2D(40, 5);
+			expectedPosition = new Vector2D(35, -5);
 			Assert.AreEqual(expectedPosition, child2.Position);
 		}
 
@@ -206,10 +206,10 @@ namespace TreeVisualisationTest
             var expectedPosition = new Vector2D(6, 0);
             Assert.AreEqual(expectedPosition, root.Position);
 
-            expectedPosition = new Vector2D(0, 8);
+            expectedPosition = new Vector2D(0, -8);
             Assert.AreEqual(expectedPosition, child1.Position);
 
-            expectedPosition = new Vector2D(12, 8);
+            expectedPosition = new Vector2D(12,-8);
             Assert.AreEqual(expectedPosition, child2.Position);
         }
 	}

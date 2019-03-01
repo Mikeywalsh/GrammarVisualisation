@@ -127,7 +127,7 @@ namespace TreeVisualisation.Core
             foreach (var leaf in leafNodes)
             {
                 // Initialise position of this leaf node
-                var yPos = leaf.Depth * (VerticalSpacing + NodeHeight);
+                var yPos = -leaf.Depth * (VerticalSpacing + NodeHeight);
                 var xPos = 0f;
 
                 if (previousNode != null)
@@ -137,7 +137,7 @@ namespace TreeVisualisation.Core
                     // Add additional spacing if this leaf node is not a sibling of the previous node
                     if (!leaf.IsSiblingOf(previousNode))
                     {
-                        xPos += HorizontalSpacing;
+                        xPos += HorizontalSpacing * 0.5f;
                     }
                 }
 
@@ -171,7 +171,7 @@ namespace TreeVisualisation.Core
                 foreach (var node in parentNodes)
                 {
                     // Initialise Y position of the parent node
-                    var yPos = node.Depth * (VerticalSpacing + NodeHeight);
+                    var yPos = -node.Depth * (VerticalSpacing + NodeHeight);
 
                     // Calculate the X position of the parent node based on the average of the positions of its children
                     var childrenXPosSum = node.Children.Sum(child => child.Position.X);
