@@ -64,6 +64,7 @@
   <ItemGroup>
     <Compile Include="Assets\Code\CameraController.cs" />
     <Compile Include="Assets\Code\LineConnection.cs" />
+    <Compile Include="Assets\Code\UI\UIController.cs" />
     <Compile Include="Assets\Code\UnityTreeController.cs" />
     <Compile Include="Assets\Code\UnityTreeNodeObject.cs" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Surface-Mobile.shader" />

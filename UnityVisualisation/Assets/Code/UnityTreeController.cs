@@ -31,8 +31,12 @@ public class UnityTreeController : MonoBehaviour
         // Create a line connection between each node in the tree
         CreateLineConnections();
 
+        // Set the starting camera position
         var treeBounds = CalculateTreeBounds();
         Camera.main.GetComponent<CameraController>().PositionCamera(treeBounds);
+
+        // Initialise the UI
+        UIController.Controller.InitialiseUI();
     }
 
     private Rect CalculateTreeBounds()

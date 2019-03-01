@@ -2,12 +2,24 @@
 
 public sealed class LineConnection : MonoBehaviour
 {
+    private static Material LineMaterial;
+
     private LineRenderer line;
     private GameObject Target;
 
+    private static readonly Color LineColor = Color.green;
+
     private void Awake()
     {
+        if (LineMaterial == null)
+        {
+            LineMaterial = new Material(Shader.Find("Mobile/Particles/Additive"));
+        }
+
         line = gameObject.AddComponent<LineRenderer>();
+        line.material = LineMaterial;
+        line.startColor = LineColor;
+        line.endColor = LineColor;
     }
 
     private void Update()
