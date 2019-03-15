@@ -1,0 +1,8 @@
+language: csharp
+solution: TreeVisualisation/TreeVisualisation.sln
+install:
+  - nuget restore TreeVisualisation/TreeVisualisation.sln
+  - nuget install NUnit.Console -Version 3.6.0 -OutputDirectory testrunner
+script:
+  - xbuild /p:Configuration=Debug TreeVisualisation/TreeVisualisation.sln
+  - mono ./testrunner/NUnit.ConsoleRunner.3.6.0/tools/nunit3-console.exe ./TreeVisualisationTest/bin/Debug/TreeVisualisationTest.dll
