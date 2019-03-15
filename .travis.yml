@@ -5,4 +5,4 @@ install:
   - nuget install NUnit.Console -Version 3.6.0 -OutputDirectory testrunner
 script:
   - xbuild /p:Configuration=Debug TreeVisualisation/TreeVisualisation.sln
-  - mono ./testrunner/NUnit.ConsoleRunner.3.6.0/tools/nunit3-console.exe ./TreeVisualisationTest/bin/Debug/TreeVisualisationTest.dll
+  - mono ./testrunner/NUnit.ConsoleRunner.3.6.0/tools/nunit3-console.exe ./TreeVisualisation/TreeVisualisationTest/bin/Debug/TreeVisualisationTest.dll
