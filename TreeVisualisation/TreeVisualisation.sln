@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TreeVisualisationTest", "Tr
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TreeVisualisation", "TreeVisualisation\TreeVisualisation.csproj", "{3AF1695E-F822-414C-8C88-1210745A6230}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WpfTreeVisualisation", "WpfTreeVisualisation\WpfTreeVisualisation.csproj", "{44C31B89-375E-490F-899D-7529B02D7F6D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{3AF1695E-F822-414C-8C88-1210745A6230}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3AF1695E-F822-414C-8C88-1210745A6230}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3AF1695E-F822-414C-8C88-1210745A6230}.Release|Any CPU.Build.0 = Release|Any CPU
+		{44C31B89-375E-490F-899D-7529B02D7F6D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{44C31B89-375E-490F-899D-7529B02D7F6D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{44C31B89-375E-490F-899D-7529B02D7F6D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{44C31B89-375E-490F-899D-7529B02D7F6D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
