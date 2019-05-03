@@ -1,4 +1,6 @@
-﻿namespace TreeVisualisation.Implementations.Grammar
+﻿using System.Runtime.Remoting;
+
+namespace TreeVisualisation.Implementations.Grammar
 {
 	/// <summary>
 	/// Data which can be used to describe a grammar node
@@ -28,10 +30,14 @@
 
 		public override bool Equals(object obj)
 		{
-			return obj is GrammarData gData &&
-			       gData.NodeType == NodeType &&
-			       gData.NodeText == NodeText;
-		}
+            if (!(obj is GrammarData))
+            {
+                return false;
+            }
+
+            var gData = (GrammarData)obj;
+            return gData.NodeType == NodeType && gData.NodeText == NodeText;
+        }
 
 		public override int GetHashCode()
 		{

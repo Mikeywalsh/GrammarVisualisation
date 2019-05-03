@@ -30,10 +30,15 @@ namespace TreeVisualisation.Core
 
 		public override bool Equals(object obj)
 		{
-			return obj is Vector2D vec &&
-			       Math.Abs(vec.X - X) < float.Epsilon &&
-			       Math.Abs(vec.Y - Y) < float.Epsilon;
-		}
+            if (!(obj is Vector2D))
+            {
+                return false;
+            }
+
+            var vec = (Vector2D)obj;
+            return Math.Abs(vec.X - X) < float.Epsilon &&
+                   Math.Abs(vec.Y - Y) < float.Epsilon;
+        }
 
 		public override int GetHashCode()
 		{
