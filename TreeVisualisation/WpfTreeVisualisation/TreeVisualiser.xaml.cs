@@ -17,14 +17,14 @@ using TreeVisualisation.Core;
 namespace WpfTreeVisualisation
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for TreeVisualiser.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class TreeVisualiser : Window
     {
         private Point _last;
         private bool isDragged;
 
-        public MainWindow()
+        public TreeVisualiser()
         {
             InitializeComponent();
 
