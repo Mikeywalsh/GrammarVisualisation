@@ -33,6 +33,19 @@ namespace WpfTreeVisualisation
 
         private void GenerateTree()
         {
+            // TEMP - Create a test tree
+            var numTree = new Tree<string>(new Vector2D(10, 5));
+            var root = numTree.SetRoot("TestNode1");
+            var child1 = numTree.Add(root, "TestNode2");
+            var child1A = numTree.Add(child1, "TestNode3");
+            var child1B = numTree.Add(child1, "TestNode4");
+            var child1C = numTree.Add(child1, "TestNode5");
+            var child2 = numTree.Add(root, "TestNode6");
+            numTree.PositionNodes();
+
+            // Draw the root node
+            var elements = TreeNodeDrawingFactory.GenerateNodeDrawing(numTree.Root);
+           
             var lines = new List<Line>();
 
             for (int i = 0; i < 1000; i+= 25)
@@ -44,6 +57,7 @@ namespace WpfTreeVisualisation
             }
 
             AddToCanvas(lines);
+            AddToCanvas(elements);
         }
 
         private static Line GenerateLine(Vector2D from, Vector2D to, int thickness, Color color)

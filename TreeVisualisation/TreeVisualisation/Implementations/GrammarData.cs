@@ -5,7 +5,7 @@ namespace TreeVisualisation.Implementations.Grammar
 	/// <summary>
 	/// Data which can be used to describe a grammar node
 	/// </summary>
-	public struct GrammarData
+	public class GrammarData
 	{
 		/// <summary>
 		/// The type of grammar node this describes
