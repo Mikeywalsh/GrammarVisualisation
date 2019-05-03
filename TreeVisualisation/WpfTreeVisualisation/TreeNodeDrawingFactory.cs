@@ -1,17 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 using TreeVisualisation.Core;
 using TreeVisualisation.Implementations.Grammar;
@@ -42,6 +32,8 @@ namespace WpfTreeVisualisation
                 Stroke = c_LineBrush,
                 Fill = c_BodyFillBrush
             };
+            Canvas.SetLeft(outlineBox, pos.X);
+            Canvas.SetTop(outlineBox, pos.Y);
             elements.Add(outlineBox);
 
             // Draw the header box
@@ -53,6 +45,8 @@ namespace WpfTreeVisualisation
                 Stroke = c_LineBrush,
                 Fill = c_HeaderFillBrush
             };
+            Canvas.SetLeft(headerBox, pos.X);
+            Canvas.SetTop(headerBox, pos.Y);
             elements.Add(headerBox);
 
             // Draw the header text
@@ -62,8 +56,8 @@ namespace WpfTreeVisualisation
                 FlowDirection = FlowDirection.LeftToRight,
                 FontFamily = c_MainFont
             };
-            Canvas.SetLeft(headerText, headerBox.Width / 2 - ((headerText.FontSize * headerText.Text.Length) / 4));
-            Canvas.SetTop(headerText, (headerBox.Height / 2) - (headerText.FontSize / 2));
+            Canvas.SetLeft(headerText, pos.X + (headerBox.Width / 2) - ((headerText.FontSize * headerText.Text.Length) / 4));
+            Canvas.SetTop(headerText, pos.Y + (headerBox.Height / 2) - (headerText.FontSize / 2));
             elements.Add(headerText);
 
             // Draw the body text
@@ -74,12 +68,34 @@ namespace WpfTreeVisualisation
                 FontSize = 20,
                 FontFamily = c_MainFont
             };
-            Canvas.SetLeft(bodyText, outlineBox.Width / 2 - ((bodyText.FontSize * bodyText.Text.Length) / 4));
-            Canvas.SetTop(bodyText, (outlineBox.Height / 2) - (bodyText.FontSize / 2));
+            Canvas.SetLeft(bodyText, pos.X + outlineBox.Width / 2 - ((bodyText.FontSize * bodyText.Text.Length) / 4));
+            Canvas.SetTop(bodyText, pos.Y + (outlineBox.Height / 2) - (bodyText.FontSize / 2));
             elements.Add(bodyText);
 
             // Return all elements generated
             return elements;
+        }
+
+        public static Line GenerateNodeConnection<T>(TreeNode<T> node)
+        {
+            if (node.Parent == null)
+            {
+                return null;
+            }
+
+            // TEMP - Generate point from position of node
+            var pos = new Point(node.Position.X, node.Position.Y);
+
+            // Return a line from this node to its parent
+            return new Line
+            {
+                X1 = node.Position.X + 75,
+                Y1 = node.Position.Y + 50,
+                X2 = node.Parent.Position.X + 75,
+                Y2 = node.Parent.Position.Y + 50,
+                StrokeThickness = 5,
+                Stroke = c_LineBrush
+            };
         }
 
         private static (string, string) GetNodeText<T>(TreeNode<T> node)

@@ -6,8 +6,9 @@
         xmlns:local="clr-namespace:WpfTreeVisualisation"
         mc:Ignorable="d"
         Title="Tree Visualization" Height="450" Width="800">
-    <Grid Background="Black">
-        <Canvas Name="mainCanvas" Margin="10" Background="Bisque">
+
+    <Grid Background="Bisque">
+        <Canvas Name="mainCanvas" Margin="10" Background="Bisque" ZIndex="-1">
             <Canvas.RenderTransform>
                 <MatrixTransform x:Name="mt"/>
             </Canvas.RenderTransform>

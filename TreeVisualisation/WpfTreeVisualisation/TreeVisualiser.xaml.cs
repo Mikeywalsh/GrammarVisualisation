@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using TreeVisualisation.Core;
+using TreeVisualisation.Implementations.Grammar;
 
 namespace WpfTreeVisualisation
 {
@@ -34,17 +35,21 @@ namespace WpfTreeVisualisation
         private void GenerateTree()
         {
             // TEMP - Create a test tree
-            var numTree = new Tree<string>(new Vector2D(10, 5));
-            var root = numTree.SetRoot("TestNode1");
-            var child1 = numTree.Add(root, "TestNode2");
-            var child1A = numTree.Add(child1, "TestNode3");
-            var child1B = numTree.Add(child1, "TestNode4");
-            var child1C = numTree.Add(child1, "TestNode5");
-            var child2 = numTree.Add(root, "TestNode6");
-            numTree.PositionNodes();
+            var tree = new GrammarTree("sampleGrammar.txt", new Vector2D(100, 100), new Vector2D(150, 100));
 
-            // Draw the root node
-            var elements = TreeNodeDrawingFactory.GenerateNodeDrawing(numTree.Root);
+            // Get all elements of the tree
+            var elements = new List<UIElement>();
+            var lineConnections = new List<UIElement>();
+
+            foreach (var node in tree.AllNodes)
+            {
+                elements.AddRange(TreeNodeDrawingFactory.GenerateNodeDrawing(node));
+                var connection = TreeNodeDrawingFactory.GenerateNodeConnection(node);
+                if (connection != null)
+                {
+                    lineConnections.Add(connection);
+                }
+            }
            
             var lines = new List<Line>();
 
@@ -56,7 +61,7 @@ namespace WpfTreeVisualisation
                 lines.Add(GenerateLine(from, to, 5, Color.FromRgb(0,0,0)));
             }
 
-            AddToCanvas(lines);
+            AddToCanvas(lineConnections);
             AddToCanvas(elements);
         }
 
