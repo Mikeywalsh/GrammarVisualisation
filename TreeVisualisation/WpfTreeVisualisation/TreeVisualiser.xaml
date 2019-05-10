@@ -7,11 +7,22 @@
         mc:Ignorable="d"
         Title="Tree Visualization" Height="450" Width="800">
 
-    <Grid Background="Bisque">
-        <Canvas Name="mainCanvas" Margin="10" Background="Bisque" ZIndex="-1">
-            <Canvas.RenderTransform>
-                <MatrixTransform x:Name="mt"/>
-            </Canvas.RenderTransform>
-        </Canvas>
-    </Grid>
+    <Border BorderBrush="Black" BorderThickness="10">
+        <Grid Background= "Bisque">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="8*"/>
+                <RowDefinition Height="50"/>
+            </Grid.RowDefinitions>
+
+            <Canvas Grid.Row="0" Name="mainCanvas" Margin="10" Background="Bisque" ZIndex="10">
+                <Canvas.RenderTransform>
+                    <MatrixTransform x:Name="mt"/>
+                </Canvas.RenderTransform>
+            </Canvas>
+            <TextBlock Grid.Row="1" Text="TEST TEST TEST TEST TEST HELP OH GOD" FontSize="20" FontStyle="Italic"/>
+        </Grid>
+    </Border>
 </Window>
