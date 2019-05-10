@@ -139,13 +139,20 @@ namespace WpfTreeVisualisation
             var scrollingUp = e.Delta > 0;
             var matrix = mt.Matrix;
 
+            var widthScalingOffset = ActualWidth * 0.5f;
+            var heightScalingOffset = ActualHeight * 0.5f;
+
             if (scrollingUp)
             {
-                matrix.Scale(1.01f, 1.01f);
+                matrix.Translate(-widthScalingOffset, -heightScalingOffset);
+                matrix.Scale(1.02f, 1.02f);
+                matrix.Translate(widthScalingOffset, heightScalingOffset);
             }
             else
             {
-                matrix.Scale(0.99f, 0.99f);
+                matrix.Translate(-widthScalingOffset, -heightScalingOffset);
+                matrix.Scale(0.98f, 0.98f);
+                matrix.Translate(widthScalingOffset, heightScalingOffset);
             }
 
             mt.Matrix = matrix;
