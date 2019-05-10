@@ -34,12 +34,13 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Numerics.Vectors" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Core\ITreeNodeObject.cs" />
     <Compile Include="Core\Tree.cs" />
     <Compile Include="Core\TreeNode.cs" />
-    <Compile Include="Core\Vector2D.cs" />
     <Compile Include="Implementations\GrammarData.cs" />
     <Compile Include="Implementations\GrammarNodeType.cs" />
     <Compile Include="Implementations\GrammarTree.cs" />

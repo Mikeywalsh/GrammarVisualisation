@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Numerics;
 
 namespace TreeVisualisation.Core
 {
@@ -21,7 +22,7 @@ namespace TreeVisualisation.Core
 		/// <summary>
 		/// The position of this node when the tree has been positioned
 		/// </summary>
-		public Vector2D Position { get; set; }
+		public Vector2 Position { get; set; }
 
 		/// <summary>
 		/// The data contained within this node

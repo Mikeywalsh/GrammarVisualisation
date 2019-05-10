@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -35,7 +36,7 @@ namespace WpfTreeVisualisation
         private void GenerateTree()
         {
             // TEMP - Create a test tree
-            var tree = new GrammarTree("sampleGrammar.txt", new Vector2D(100, 100), new Vector2D(150, 100));
+            var tree = new GrammarTree("sampleGrammar.txt", new Vector2(100, 100), new Vector2(150, 100));
 
             // Get all elements of the tree
             var elements = new List<UIElement>();
@@ -55,8 +56,8 @@ namespace WpfTreeVisualisation
 
             for (int i = 0; i < 1000; i+= 25)
             {
-                var from = new Vector2D(i, 50);
-                var to = new Vector2D(i, 100);
+                var from = new Vector2(i, 50);
+                var to = new Vector2(i, 100);
 
                 lines.Add(GenerateLine(from, to, 5, Color.FromRgb(0,0,0)));
             }
@@ -65,7 +66,7 @@ namespace WpfTreeVisualisation
             AddToCanvas(elements);
         }
 
-        private static Line GenerateLine(Vector2D from, Vector2D to, int thickness, Color color)
+        private static Line GenerateLine(Vector2 from, Vector2 to, int thickness, Color color)
         {
             return new Line()
             {

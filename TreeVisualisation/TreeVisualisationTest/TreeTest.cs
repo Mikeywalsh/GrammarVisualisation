@@ -11,7 +11,7 @@ namespace TreeVisualisationTest
 		[SetUp]
 		public void CreateTree()
 		{
-			numTree = new Tree<int>(new Vector2D(10, 5));
+			numTree = new Tree<int>(new Vector2(10, 5));
 		}
 
 		[Test]
@@ -124,7 +124,7 @@ namespace TreeVisualisationTest
 			var root = numTree.SetRoot(5);
 			numTree.PositionNodes();
 
-			var expectedPosition = new Vector2D(0, 0);
+			var expectedPosition = new Vector2(0, 0);
 			Assert.AreEqual(expectedPosition, root.Position);
 		}
 
@@ -135,10 +135,10 @@ namespace TreeVisualisationTest
 			var child = numTree.Add(root, 3);
 			numTree.PositionNodes();
 
-			var expectedPosition = new Vector2D(0, 0);
+			var expectedPosition = new Vector2(0, 0);
 			Assert.AreEqual(expectedPosition, root.Position);
 
-			expectedPosition = new Vector2D(0, -5);
+			expectedPosition = new Vector2(0, -5);
 			Assert.AreEqual(expectedPosition, child.Position);
 		}
 
@@ -150,13 +150,13 @@ namespace TreeVisualisationTest
 			var child2 = numTree.Add(root, 6);
 			numTree.PositionNodes();
 
-			var expectedPosition = new Vector2D(5, 0);
+			var expectedPosition = new Vector2(5, 0);
 			Assert.AreEqual(expectedPosition, root.Position);
 
-			expectedPosition = new Vector2D(0, -5);
+			expectedPosition = new Vector2(0, -5);
 			Assert.AreEqual(expectedPosition, child1.Position);
 
-			expectedPosition = new Vector2D(10, -5);
+			expectedPosition = new Vector2(10, -5);
 			Assert.AreEqual(expectedPosition, child2.Position);
 		}
 
@@ -173,29 +173,29 @@ namespace TreeVisualisationTest
 
 			Assert.AreEqual(4, numTree.GetLeafNodes().Count);
 
-			var expectedPosition = new Vector2D(22.5f, 0);
+			var expectedPosition = new Vector2(22.5f, 0);
 			Assert.AreEqual(expectedPosition, root.Position);
 
-			expectedPosition = new Vector2D(10, -5);
+			expectedPosition = new Vector2(10, -5);
 			Assert.AreEqual(expectedPosition, child1.Position);
 
-			expectedPosition = new Vector2D(0, -10);
+			expectedPosition = new Vector2(0, -10);
 			Assert.AreEqual(expectedPosition, child1A.Position);
 
-			expectedPosition = new Vector2D(10, -10);
+			expectedPosition = new Vector2(10, -10);
 			Assert.AreEqual(expectedPosition, child1B.Position);
 
-			expectedPosition = new Vector2D(20, -10);
+			expectedPosition = new Vector2(20, -10);
 			Assert.AreEqual(expectedPosition, child1C.Position);
 
-			expectedPosition = new Vector2D(35, -5);
+			expectedPosition = new Vector2(35, -5);
 			Assert.AreEqual(expectedPosition, child2.Position);
 		}
 
         [Test]
         public void PositionNodesWithWidthAndHeight()
         {
-            var treeWithDimensionalNodes = new Tree<string>(new Vector2D(2, 3), new Vector2D(10, 5));
+            var treeWithDimensionalNodes = new Tree<string>(new Vector2(2, 3), new Vector2(10, 5));
 
             var root = treeWithDimensionalNodes.SetRoot("foo");
             var child1 = treeWithDimensionalNodes.Add(root, "bar");
@@ -203,13 +203,13 @@ namespace TreeVisualisationTest
 
             treeWithDimensionalNodes.PositionNodes();
 
-            var expectedPosition = new Vector2D(6, 0);
+            var expectedPosition = new Vector2(6, 0);
             Assert.AreEqual(expectedPosition, root.Position);
 
-            expectedPosition = new Vector2D(0, -8);
+            expectedPosition = new Vector2(0, -8);
             Assert.AreEqual(expectedPosition, child1.Position);
 
-            expectedPosition = new Vector2D(12,-8);
+            expectedPosition = new Vector2(12,-8);
             Assert.AreEqual(expectedPosition, child2.Position);
         }
 	}

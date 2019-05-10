@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 
 namespace TreeVisualisation.Core
 {
@@ -51,7 +52,7 @@ namespace TreeVisualisation.Core
         /// </summary>
         /// <param name="spacing">The spacing to use between nodes</param>
         /// <param name="nodeDimensions">The width and height dimensions of each node within this tree</param>
-        public Tree(Vector2D spacing, Vector2D nodeDimensions = default(Vector2D))
+        public Tree(Vector2 spacing, Vector2 nodeDimensions = default(Vector2))
         {
             HorizontalSpacing = spacing.X;
             VerticalSpacing = spacing.Y;
@@ -142,7 +143,7 @@ namespace TreeVisualisation.Core
                 }
 
                 // Finally, assign the new leaf node position to its respective IGrammarTreeNodeObject
-                var leafPosition = new Vector2D(xPos, yPos);
+                var leafPosition = new Vector2(xPos, yPos);
                 leaf.Position = leafPosition;
 
                 // Set previousNode for the next cycles
@@ -179,7 +180,7 @@ namespace TreeVisualisation.Core
                     var xPos = averageXPosOfChildren;
 
                     // Finally, assign the new parent node position to its respective IGrammarTreeNodeObject
-                    var nodePosition = new Vector2D(xPos, yPos);
+                    var nodePosition = new Vector2(xPos, yPos);
                     node.Position = nodePosition;
                 }
 

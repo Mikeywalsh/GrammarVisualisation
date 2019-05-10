@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Numerics;
 using TreeVisualisation.Core;
 
 namespace TreeVisualisation.Implementations.Grammar
@@ -13,7 +14,7 @@ namespace TreeVisualisation.Implementations.Grammar
         /// <param name="filePath">The file location of the grammar tree data</param>
         /// <param name="spacing">The spacing to use between nodes</param>
         /// <param name="nodeDimensions">The width and height dimensions of each node within this tree</param>
-        public GrammarTree(string filePath, Vector2D spacing, Vector2D nodeDimensions = default(Vector2D)) : base(spacing, nodeDimensions)
+        public GrammarTree(string filePath, Vector2 spacing, Vector2 nodeDimensions = default(Vector2)) : base(spacing, nodeDimensions)
 		{
 			// Initialise the creation stack used to assist parsing
 			var creationStack = new Stack<TreeNode<GrammarData>>();
