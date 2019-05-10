@@ -92,6 +92,9 @@ namespace WpfTreeVisualisation
             }
         }
 
+        /// <summary>
+        /// Enables the ability to move the canvas when the mouse button is pressed down
+        /// </summary>
         protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
         {
             base.OnMouseLeftButtonDown(e);
@@ -101,6 +104,9 @@ namespace WpfTreeVisualisation
             isDragged = true;
         }
 
+        /// <summary>
+        /// Stops the ability to move the canvas when the mouse button is released
+        /// </summary>
         protected override void OnMouseLeftButtonUp(MouseButtonEventArgs e)
         {
             base.OnMouseLeftButtonUp(e);
@@ -108,6 +114,9 @@ namespace WpfTreeVisualisation
             isDragged = false;
         }
 
+        /// <summary>
+        /// When dragged, moves the perspective of the canvas
+        /// </summary>
         protected override void OnMouseMove(MouseEventArgs e)
         {
             if (isDragged == false)
@@ -116,14 +125,30 @@ namespace WpfTreeVisualisation
             base.OnMouseMove(e);
             if (e.LeftButton == MouseButtonState.Pressed && IsMouseCaptured)
             {
-
                 var pos = e.GetPosition(this);
                 var matrix = mt.Matrix; // it's a struct
                 matrix.Translate(pos.X - _last.X, pos.Y - _last.Y);
                 mt.Matrix = matrix;
                 _last = pos;
-
             }
+        }
+
+
+        protected override void OnMouseWheel(MouseWheelEventArgs e)
+        {
+            var scrollingUp = e.Delta > 0;
+            var matrix = mt.Matrix;
+
+            if (scrollingUp)
+            {
+                matrix.Scale(1.01f, 1.01f);
+            }
+            else
+            {
+                matrix.Scale(0.99f, 0.99f);
+            }
+
+            mt.Matrix = matrix;
         }
     }
 }
