@@ -11,7 +11,9 @@ namespace WpfTreeVisualisation
     internal static class TreeNodeDrawingFactory
     {
         private static Brush c_LineBrush = new SolidColorBrush(Color.FromRgb(0, 0, 0));
-        private static Brush c_HeaderFillBrush = new SolidColorBrush(Color.FromRgb(255, 180, 180));
+        private static Brush c_NonterminalHeaderFillBrush = new SolidColorBrush(Color.FromRgb(255, 180, 180));
+        private static Brush c_TerminalHeaderFillBrush = new SolidColorBrush(Color.FromRgb(100,190,100));
+        private static Brush c_DefaultHeaderFillBrush = new SolidColorBrush(Color.FromRgb(100,100,190));
         private static Brush c_BodyFillBrush = new SolidColorBrush(Color.FromRgb(253, 253, 150));
         private static FontFamily c_MainFont = new FontFamily("Courier New");
 
@@ -43,7 +45,7 @@ namespace WpfTreeVisualisation
                 Height = 25,
                 StrokeThickness = 5,
                 Stroke = c_LineBrush,
-                Fill = c_HeaderFillBrush
+                Fill = GetNodeHeaderBrush(node)
             };
             Canvas.SetLeft(headerBox, pos.X);
             Canvas.SetTop(headerBox, pos.Y);
@@ -108,6 +110,19 @@ namespace WpfTreeVisualisation
 
             // If not a grammar node, just return string representation of data
             return (node.Data.ToString(), "...");
+        }
+
+        private static Brush GetNodeHeaderBrush<T>(TreeNode<T> node)
+        {
+            if (typeof(T) == typeof(GrammarData))
+            {
+                GrammarData data = node.Data as GrammarData;
+                return data.NodeType == GrammarNodeType.TERMINAL
+                    ? c_TerminalHeaderFillBrush
+                    : c_NonterminalHeaderFillBrush;
+            }
+
+            return c_DefaultHeaderFillBrush;
         }
     }
 }
