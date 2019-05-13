@@ -17,7 +17,7 @@
                 <RowDefinition Height="50"/>
             </Grid.RowDefinitions>
 
-            <Canvas Grid.Row="0" Name="mainCanvas" Margin="10" Background="Bisque" ZIndex="10">
+            <Canvas Grid.Row="0" Name="mainCanvas" Margin="10" Background="Transparent" ZIndex="10">
                 <Canvas.RenderTransform>
                     <MatrixTransform x:Name="mt"/>
                 </Canvas.RenderTransform>
