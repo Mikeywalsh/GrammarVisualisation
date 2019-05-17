@@ -10,10 +10,11 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>TreeVisualisationTest</RootNamespace>
     <AssemblyName>TreeVisualisationTest</AssemblyName>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -50,7 +51,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TreeVisualisation\TreeVisualisation.csproj">
-      <Project>{3af1695e-f822-414c-8c88-1210745a6230}</Project>
+      <Project>{b64e28f9-3f4a-4825-ac97-f07d707f4cd7}</Project>
       <Name>TreeVisualisation</Name>
     </ProjectReference>
   </ItemGroup>

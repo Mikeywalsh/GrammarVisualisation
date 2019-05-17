@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace WpfTreeVisualisation.Properties
+namespace TreeVisualisation.Properties
 {
 
 

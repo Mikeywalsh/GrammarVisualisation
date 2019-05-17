@@ -6,7 +6,7 @@ using System.Windows.Media;
 using System.Windows.Shapes;
 using TreeVisualisation.Implementations.Grammar;
 
-namespace WpfTreeVisualisation
+namespace TreeVisualisation.Visualisation
 {
     /// <summary>
     /// Interaction logic for TreeVisualiser.xaml

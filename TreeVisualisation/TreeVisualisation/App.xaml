@@ -1,8 +1,8 @@
-﻿<Application x:Class="WpfTreeVisualisation.App"
+﻿<Application x:Class="TreeVisualisation.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:WpfTreeVisualisation"
-             StartupUri="TreeVisualiser.xaml">
+             xmlns:local="clr-namespace:TreeVisualisation"
+             StartupUri="Visualisation/TreeVisualiser.xaml">
     <Application.Resources>
          
     </Application.Resources>

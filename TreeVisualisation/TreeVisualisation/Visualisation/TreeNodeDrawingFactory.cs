@@ -6,7 +6,7 @@ using System.Windows.Shapes;
 using TreeVisualisation.Core;
 using TreeVisualisation.Implementations.Grammar;
 
-namespace WpfTreeVisualisation
+namespace TreeVisualisation.Visualisation
 {
     internal static class TreeNodeDrawingFactory
     {
