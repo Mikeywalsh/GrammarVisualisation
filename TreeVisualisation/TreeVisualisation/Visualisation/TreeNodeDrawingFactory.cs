@@ -22,8 +22,7 @@ namespace TreeVisualisation.Visualisation
             // Initialise a collection of UIElements to return
             var elements = new List<UIElement>();
 
-            // TEMP - Generate point from position of node
-            var pos = new Point(node.Position.X, node.Position.Y);
+            var pos = node.Position;
 
             // Draw the outline box
             var outlineBox = new Rectangle
