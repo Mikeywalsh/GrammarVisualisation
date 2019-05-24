@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Numerics;
 using System.Windows;
 using System.Windows.Input;
@@ -45,8 +46,15 @@ namespace TreeVisualisation.Visualisation
                 }
             }
 
+            // Actually draw the tree to the canvas
             AddToCanvas(lineConnections);
             AddToCanvas(elements);
+
+            // Show stats about the tree on the canvas
+            treeIndexText.Text = "Tree 1 of 1";
+            nonTerminalsText.Text = $"Non-Terminals: {VisualisedTree.AllNodes.Count(n => n.Data.NodeType == GrammarNodeType.NONTERMINAL)}";
+            terminalsText.Text = $"Terminals: {VisualisedTree.AllNodes.Count(n => n.Data.NodeType == GrammarNodeType.TERMINAL)}";
+            errorsText.Text = $"Errors: {VisualisedTree.AllNodes.Count(n => n.Data.NodeType == GrammarNodeType.ERROR)}";
         }
 
         private void Node_MouseDown(object sender, NodeMouseButtonEventArgs e)
@@ -54,6 +62,9 @@ namespace TreeVisualisation.Visualisation
             Console.WriteLine(value: $"Clicked node: {e.ClickedNode}");
         }
 
+        /// <summary>
+        /// Generates a line to draw, given coordinates, thickness and color
+        /// </summary>
         private static Line GenerateLine(Vector2 from, Vector2 to, int thickness, Color color)
         {
             return new Line()
@@ -67,11 +78,17 @@ namespace TreeVisualisation.Visualisation
             };
         }
 
+        /// <summary>
+        /// Adds a UI element to the canvas so that it is visible
+        /// </summary>
         private void AddToCanvas(UIElement element)
         {
             mainCanvas.Children.Add(element);
         }
 
+        /// <summary>
+        /// Adds a range of UI elements to the canvas, so that they can all be visible
+        /// </summary>
         private void AddToCanvas(IEnumerable<UIElement> elements)
         {
             foreach (var element in elements)
@@ -121,7 +138,9 @@ namespace TreeVisualisation.Visualisation
             }
         }
 
-
+        /// <summary>
+        /// Allows zooming in/out of the visualisation
+        /// </summary>
         protected override void OnMouseWheel(MouseWheelEventArgs e)
         {
             var scrollingUp = e.Delta > 0;

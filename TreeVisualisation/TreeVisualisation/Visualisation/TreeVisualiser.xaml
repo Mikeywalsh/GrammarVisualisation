@@ -36,10 +36,10 @@
         <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal">
             <StackPanel Orientation="Vertical" Background="LightGray" Width="275">
                 <Rectangle Fill="Black" Height="10"/>
-                <TextBlock Text="Tree 1 of 1" FontSize="45" FontStyle="Italic" Height="60" HorizontalAlignment="Center"/>
-                <TextBlock Text="Non-Terminals: {0}" FontSize="30" Height="40" HorizontalAlignment="Center"/>
-                <TextBlock Text="Terminals: {0}" FontSize="30" Height="40" HorizontalAlignment="Center"/>
-                <TextBlock Text="Errors: {0}" FontSize="30" Height="40" HorizontalAlignment="Center"/>
+                <TextBlock Name="treeIndexText" Text="Tree 1 of 1" FontSize="45" FontStyle="Italic" Height="60" HorizontalAlignment="Center"/>
+                <TextBlock Name="nonTerminalsText" Text="Non-Terminals: {0}" FontSize="30" Height="40" HorizontalAlignment="Center"/>
+                <TextBlock Name="terminalsText" Text="Terminals: {0}" FontSize="30" Height="40" HorizontalAlignment="Center"/>
+                <TextBlock Name="errorsText" Text="Errors: {0}" FontSize="30" Height="40" HorizontalAlignment="Center"/>
             </StackPanel>
             <Rectangle Fill="Black" Width="10"/>
         </StackPanel>

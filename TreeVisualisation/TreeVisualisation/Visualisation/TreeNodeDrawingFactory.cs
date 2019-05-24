@@ -129,7 +129,6 @@ namespace TreeVisualisation.Visualisation
                     case GrammarNodeType.ERROR:
                         return c_ErrorHeaderFillBrush;
                 }
-
             }
 
             return c_DefaultHeaderFillBrush;
