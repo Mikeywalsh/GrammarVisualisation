@@ -83,8 +83,8 @@ namespace TreeVisualisation.Implementations.Grammar
 				return GrammarNodeType.NONTERMINAL;
 			}
 
-			return GrammarNodeType.TERMINAL;
-		}
+            return nodeText == "ERROR" ? GrammarNodeType.ERROR : GrammarNodeType.TERMINAL;
+        }
 
 	}
 }

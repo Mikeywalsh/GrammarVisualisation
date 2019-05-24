@@ -14,6 +14,7 @@ namespace TreeVisualisation.Visualisation
     {
         private static Brush c_LineBrush = new SolidColorBrush(Color.FromRgb(0, 0, 0));
         private static Brush c_NonterminalHeaderFillBrush = new SolidColorBrush(Color.FromRgb(255, 180, 180));
+        private static Brush c_ErrorHeaderFillBrush = new SolidColorBrush(Color.FromRgb(255, 20, 20));
         private static Brush c_TerminalHeaderFillBrush = new SolidColorBrush(Color.FromRgb(100,190,100));
         private static Brush c_DefaultHeaderFillBrush = new SolidColorBrush(Color.FromRgb(100,100,190));
         private static Brush c_BodyFillBrush = new SolidColorBrush(Color.FromRgb(253, 253, 150));
@@ -119,9 +120,16 @@ namespace TreeVisualisation.Visualisation
             if (typeof(T) == typeof(GrammarData))
             {
                 GrammarData data = node.Data as GrammarData;
-                return data.NodeType == GrammarNodeType.TERMINAL
-                    ? c_TerminalHeaderFillBrush
-                    : c_NonterminalHeaderFillBrush;
+                switch (data.NodeType)
+                {
+                    case GrammarNodeType.TERMINAL:
+                        return c_TerminalHeaderFillBrush;
+                    case GrammarNodeType.NONTERMINAL:
+                        return c_NonterminalHeaderFillBrush;
+                    case GrammarNodeType.ERROR:
+                        return c_ErrorHeaderFillBrush;
+                }
+
             }
 
             return c_DefaultHeaderFillBrush;
