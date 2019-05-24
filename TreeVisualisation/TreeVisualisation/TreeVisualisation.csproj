@@ -60,11 +60,13 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Core\ITreeNode.cs" />
     <Compile Include="Core\Tree.cs" />
     <Compile Include="Core\TreeNode.cs" />
     <Compile Include="Implementations\Grammar\GrammarData.cs" />
     <Compile Include="Implementations\Grammar\GrammarNodeType.cs" />
     <Compile Include="Implementations\Grammar\GrammarTree.cs" />
+    <Compile Include="Visualisation\NodeMouseButtonEventArgs.cs" />
     <Compile Include="Visualisation\TreeNodeDrawingFactory.cs" />
     <Compile Include="Visualisation\TreeVisualiser.xaml.cs">
       <DependentUpon>TreeVisualiser.xaml</DependentUpon>

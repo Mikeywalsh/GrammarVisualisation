@@ -7,22 +7,46 @@
         mc:Ignorable="d"
         Title="Tree Visualization" Height="450" Width="800">
 
-    <Border BorderBrush="Black" BorderThickness="10">
-        <Grid Background= "Bisque">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="1*"/>
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="8*"/>
-                <RowDefinition Height="50"/>
-            </Grid.RowDefinitions>
+    <Grid Background= "Bisque">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="15" />
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="15" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="15"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="190"/>
+            <RowDefinition Height="15"/>
+        </Grid.RowDefinitions>
 
-            <Canvas Grid.Row="0" Name="mainCanvas" Margin="10" Background="Transparent" ZIndex="10">
-                <Canvas.RenderTransform>
-                    <MatrixTransform x:Name="mt"/>
-                </Canvas.RenderTransform>
-            </Canvas>
-            <TextBlock Grid.Row="1" Text="TEST TEST TEST TEST TEST HELP OH GOD" FontSize="20" FontStyle="Italic"/>
-        </Grid>
-    </Border>
+        <Rectangle Grid.Row="0" Grid.Column="0" Fill="Black"/>
+        <Rectangle Grid.Row="0" Grid.Column="1" Fill="Black"/>
+        <Rectangle Grid.Row="0" Grid.Column="2" Fill="Black"/>
+
+        <Rectangle Grid.Row="1" Grid.Column="0" Fill="Black"/>
+        <Canvas Grid.Row="1" Grid.Column="1" Name="mainCanvas" Background="Transparent" ZIndex="-1">
+            <Canvas.RenderTransform>
+                <MatrixTransform x:Name="mt"/>
+            </Canvas.RenderTransform>
+        </Canvas>
+        <Rectangle Grid.Row="1" Grid.Column="2" Fill="Black"/>
+
+        <Rectangle Grid.Row="2" Grid.Column="0" Fill="Black"/>
+        <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal">
+            <StackPanel Orientation="Vertical" Background="LightGray" Width="275">
+                <Rectangle Fill="Black" Height="10"/>
+                <TextBlock Text="Tree 1 of 1" FontSize="45" FontStyle="Italic" Height="60" HorizontalAlignment="Center"/>
+                <TextBlock Text="Non-Terminals: {0}" FontSize="30" Height="40" HorizontalAlignment="Center"/>
+                <TextBlock Text="Terminals: {0}" FontSize="30" Height="40" HorizontalAlignment="Center"/>
+                <TextBlock Text="Errors: {0}" FontSize="30" Height="40" HorizontalAlignment="Center"/>
+            </StackPanel>
+            <Rectangle Fill="Black" Width="10"/>
+        </StackPanel>
+        <Rectangle Grid.Row="2" Grid.Column="2" Fill="Black"/>
+
+        <Rectangle Grid.Row="3" Grid.Column="0" Fill="Black"/>
+        <Rectangle Grid.Row="3" Grid.Column="1" Fill="Black"/>
+        <Rectangle Grid.Row="3" Grid.Column="2" Fill="Black"/>
+    </Grid>
 </Window>

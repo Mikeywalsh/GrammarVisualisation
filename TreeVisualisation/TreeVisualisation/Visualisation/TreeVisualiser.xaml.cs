@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Numerics;
 using System.Windows;
 using System.Windows.Input;
@@ -16,6 +17,8 @@ namespace TreeVisualisation.Visualisation
         private Point _last;
         private bool isDragged;
 
+        private GrammarTree VisualisedTree;
+
         public TreeVisualiser()
         {
             InitializeComponent();
@@ -26,34 +29,29 @@ namespace TreeVisualisation.Visualisation
         private void GenerateTree()
         {
             // TEMP - Create a test tree
-            var tree = new GrammarTree("sampleGrammar.txt", new Vector2(100, 100), new Vector2(150, 100));
+            VisualisedTree = new GrammarTree("sampleGrammar.txt", new Vector2(100, 100), new Vector2(150, 100));
 
             // Get all elements of the tree
             var elements = new List<UIElement>();
             var lineConnections = new List<UIElement>();
 
-            foreach (var node in tree.AllNodes)
+            foreach (var node in VisualisedTree.AllNodes)
             {
-                elements.AddRange(TreeNodeDrawingFactory.GenerateNodeDrawing(node));
+                elements.AddRange(TreeNodeDrawingFactory.GenerateNodeDrawing(node,null));
                 var connection = TreeNodeDrawingFactory.GenerateNodeConnection(node);
                 if (connection != null)
                 {
                     lineConnections.Add(connection);
                 }
             }
-           
-            var lines = new List<Line>();
-
-            for (int i = 0; i < 1000; i+= 25)
-            {
-                var from = new Vector2(i, 50);
-                var to = new Vector2(i, 100);
-
-                lines.Add(GenerateLine(from, to, 5, Color.FromRgb(0,0,0)));
-            }
 
             AddToCanvas(lineConnections);
             AddToCanvas(elements);
+        }
+
+        private void Node_MouseDown(object sender, NodeMouseButtonEventArgs e)
+        {
+            Console.WriteLine(value: $"Clicked node: {e.ClickedNode}");
         }
 
         private static Line GenerateLine(Vector2 from, Vector2 to, int thickness, Color color)

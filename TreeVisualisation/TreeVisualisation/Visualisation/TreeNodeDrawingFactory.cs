@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Shapes;
 using TreeVisualisation.Core;
@@ -17,7 +19,7 @@ namespace TreeVisualisation.Visualisation
         private static Brush c_BodyFillBrush = new SolidColorBrush(Color.FromRgb(253, 253, 150));
         private static FontFamily c_MainFont = new FontFamily("Courier New");
 
-        public static List<UIElement> GenerateNodeDrawing<T>(TreeNode<T> node)
+        public static List<UIElement> GenerateNodeDrawing<T>(TreeNode<T> node, MouseButtonEventHandler nodeMouseDownCallback)
         {
             // Initialise a collection of UIElements to return
             var elements = new List<UIElement>();
@@ -33,6 +35,7 @@ namespace TreeVisualisation.Visualisation
                 Stroke = c_LineBrush,
                 Fill = c_BodyFillBrush
             };
+            //outlineBox.MouseDown += nodeMouseDownCallback;
             Canvas.SetLeft(outlineBox, pos.X);
             Canvas.SetTop(outlineBox, pos.Y);
             elements.Add(outlineBox);

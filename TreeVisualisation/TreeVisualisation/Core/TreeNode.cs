@@ -7,7 +7,7 @@ namespace TreeVisualisation.Core
 	/// A node that is part of a tree <para/>
 	/// Each node has a parent a list of children and a position
 	/// </summary>
-	public class TreeNode<T>
+	public class TreeNode<T> : ITreeNode
 	{
 		/// <summary>
 		/// The parent node of this node
